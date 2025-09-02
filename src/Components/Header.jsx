@@ -88,7 +88,7 @@ const Header = () => {
         <div className="header-container-2">
           <Link to="/" className="brand">
             <span className="brand-icon">
-            <img src="public/Blue and Brown Illustrative School Logo.png" alt="Organization Logo" />
+            <img src="/assets/Blue and Brown Illustrative School Logo.png" />
             </span>
             <h1 className="brand-name">Malaviya Vidyalaya Kendram</h1>
           </Link>

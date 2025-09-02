@@ -62,7 +62,7 @@ const Home = () => {
       <div
         className="hero-section"
         style={{
-          backgroundImage: `url('src/assets/premium_photo-1663050763436-818382a24bb8.avif')`,
+          backgroundImage: `url('/assets/premium_photo-1663050763436-818382a24bb8.avif')`,
         }}
       >
         <div className="overlay"></div>
