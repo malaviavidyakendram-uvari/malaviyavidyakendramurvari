@@ -1,0 +1,125 @@
+.management-container {
+  padding: 40px 20px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  background: #f9f9f9;
+}
+
+.management-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #006699;
+  margin-bottom: 40px;
+  text-transform: uppercase;
+}
+
+/* Desktop layout - normal flex/grid */
+.management-top {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-bottom: 50px;
+}
+
+.management-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  justify-content: center;
+}
+
+/* Card Design */
+.management-card {
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-width: 280px;
+  width: 100%;
+}
+
+.management-card:hover {
+  transform: translateY(-8px);
+}
+
+/* Icon Section */
+.icon-wrapper {
+  background: #006699;
+  padding: 40px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-wrapper svg {
+  font-size: 95px;
+  color: #ffffff;
+}
+
+/* Info Section */
+.management-info {
+  background: #f1f1f1;
+  padding: 20px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.management-info h2 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #333;
+  line-height: 1.3em;
+}
+
+.management-info p {
+  font-size: 15px;
+  color: #006699;
+  font-weight: 600;
+}
+
+/* ==================================
+   Mobile View Layout
+================================== */
+@media (max-width: 768px) {
+  .management-top {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    justify-items: center;
+  }
+
+  /* Center the 3rd profile below first two */
+  .management-top .management-card:nth-child(3) {
+    grid-column: 1 / -1;
+    justify-self: center;
+  }
+
+  .management-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .management-container {
+    padding: 40px 10px;
+  }
+
+  .management-top,
+  .management-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .management-card {
+    max-width: 100%;
+  }
+}

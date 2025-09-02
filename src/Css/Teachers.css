@@ -1,0 +1,127 @@
+/* ==============================
+   Teachers Section
+=============================== */
+.teachers-section {
+  padding: 60px 20px; /* spacing from edges */
+  text-align: center;
+  background: #fff;
+  font-family: Arial, sans-serif;
+}
+
+.section-subtitle {
+  color: #00bfa6;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.section-title {
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 40px;
+  color: #222;
+}
+
+/* Desktop Grid - keep original layout */
+.teachers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+  align-items: stretch; /* stretch all cards to same height */
+}
+
+/* Teacher Card */
+.teacher-card {
+  background: #f9f9f9;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+  transition: 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* distribute content evenly */
+  width: 100%;
+}
+
+.teacher-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 6px 15px rgba(0,0,0,0.15);
+}
+
+/* Teacher Icon */
+.teacher-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #00bfa6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.teacher-name {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 5px;
+  color: #222;
+}
+
+.teacher-degree {
+  font-size: 15px;
+  color: #666;
+}
+
+.teacher-exp {
+  font-size: 14px;
+  color: #333;
+  margin-top: 5px;
+}
+
+/* ==============================
+   Responsive Adjustments
+=============================== */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .teachers-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns */
+    gap: 20px;
+    justify-items: center; /* center cards */
+    align-items: stretch; /* make all cards same height */
+  }
+  .teacher-card {
+    max-width: 100%;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .teachers-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns */
+    gap: 15px;
+    justify-items: center;
+    align-items: stretch;
+  }
+  .teacher-card {
+    max-width: 100%;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+  .teachers-section {
+    padding: 40px 10px; /* reduce padding for small screens */
+  }
+  .teachers-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns */
+    gap: 10px;
+    justify-items: center;
+    align-items: stretch;
+  }
+  .teacher-card {
+    max-width: 100%;
+  }
+}

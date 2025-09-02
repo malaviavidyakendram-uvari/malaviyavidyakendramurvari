@@ -1,0 +1,115 @@
+.about-container {
+  width: 100%;
+  padding: 50px 20px;
+  font-family: Arial, sans-serif;
+}
+
+/* Who We Are Section */
+.about-content {
+  max-width: 1000px;
+  margin: 0 auto 60px auto;
+  text-align: left;
+}
+
+.about-text h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #222;
+}
+
+.about-text p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 15px;
+  color: #444;
+}
+
+/* Icons Section */
+.about-icons {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  flex-wrap: wrap;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.icon-box {
+  flex: 1 1 220px;
+  text-align: center;
+}
+
+/* Bigger circles */
+.icon-circle {
+  width: 120px;
+  height: 120px;
+  border: 4px solid;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 15px auto;
+  font-size: 2.5rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+/* Normal: border + icon in color */
+.icon-circle.gamepad {
+  border-color: orange;
+  color: orange;
+}
+.icon-circle.toys {
+  border-color: green;
+  color: green;
+}
+.icon-circle.futbol {
+  border-color: blue;
+  color: blue;
+}
+.icon-circle.education {
+  border-color: red;
+  color: red;
+}
+
+/* Hover: add lift animation */
+.icon-circle:hover {
+  transform: translateY(-8px);
+}
+
+
+/* Hover: fill bg with color + icon turns white */
+.icon-circle.gamepad:hover {
+  background: orange;
+  color: white;
+}
+.icon-circle.toys:hover {
+  background: green;
+  color: white;
+}
+.icon-circle.futbol:hover {
+  background: blue;
+  color: white;
+}
+.icon-circle.education:hover {
+  background: red;
+  color: white;
+}
+
+/* Responsive: 2x2 grid in mobile */
+@media (max-width: 768px) {
+  .about-icons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    justify-items: center;
+  }
+
+  .icon-circle {
+    width: 110px;
+    height: 110px;
+    font-size: 2.2rem;
+  }
+}
