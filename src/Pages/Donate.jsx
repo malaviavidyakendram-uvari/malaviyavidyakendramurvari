@@ -123,7 +123,7 @@ const Donate = () => {
       <div className="donation-info">
         <div className="org-logo">
           <img
-            src="/Blue and Brown Illustrative School Logo.png"
+            src="/assets/Blue and Brown Illustrative School Logo.png"
             alt="Organization Logo"
           />
         </div>

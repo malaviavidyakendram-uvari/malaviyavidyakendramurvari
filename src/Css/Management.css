@@ -91,15 +91,32 @@
 @media (max-width: 768px) {
   .management-top {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr; /* Single column for top staff */
     gap: 15px;
     justify-items: center;
   }
 
-  /* Center the 3rd profile below first two */
-  .management-top .management-card:nth-child(3) {
+  /* Make Correspondent (1st card) centered */
+  .management-top .management-card:nth-child(1) {
     grid-column: 1 / -1;
     justify-self: center;
+  }
+
+  /* Place Secretary & Treasurer into 2-column layout below */
+  .management-top .management-card:nth-child(2),
+  .management-top .management-card:nth-child(3) {
+    display: inline-block;
+    width: 100%;
+  }
+
+  /* Wrap Secretary & Treasurer into a 2-column row */
+  .management-top {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* But ensure Correspondent still spans full width */
+  .management-top .management-card:nth-child(1) {
+    grid-column: 1 / -1;
   }
 
   .management-grid {
@@ -119,7 +136,13 @@
     gap: 10px;
   }
 
+  /* Ensure Correspondent stays centered full row */
+  .management-top .management-card:nth-child(1) {
+    grid-column: 1 / -1;
+  }
+
   .management-card {
     max-width: 100%;
   }
 }
+
