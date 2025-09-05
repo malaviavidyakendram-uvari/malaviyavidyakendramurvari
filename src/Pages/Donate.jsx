@@ -132,8 +132,9 @@ const Donate = () => {
         <h3 className="donation-title">Donate to Educate</h3>
 
         <p className="donation-text">
-          We would like to support the Malaviya Vidyalaya Kendram as a small effort to
-          express our gratitude for everything we’ve been blessed with!
+          We would like to support the Malaviya Vidyalaya Kendram as a small
+          effort to express our gratitude for everything we’ve been blessed
+          with!
         </p>
 
         <div className="contact-box">
@@ -170,6 +171,7 @@ const Donate = () => {
             value={formData.amount}
             onChange={handleChange}
             required
+            autoComplete="off"
           />
           <input
             type="email"
@@ -178,6 +180,7 @@ const Donate = () => {
             value={formData.email}
             onChange={handleChange}
             required
+            autoComplete="email"
           />
           <input
             type="tel"
@@ -186,6 +189,7 @@ const Donate = () => {
             value={formData.phone}
             onChange={handleChange}
             required
+            autoComplete="tel"
           />
           <input
             type="text"
@@ -194,6 +198,7 @@ const Donate = () => {
             value={formData.name}
             onChange={handleChange}
             required
+            autoComplete="name"
           />
           <input
             type="text"
@@ -201,13 +206,16 @@ const Donate = () => {
             placeholder="PAN Number"
             value={formData.pan}
             onChange={handleChange}
+            autoComplete="off"
           />
           <textarea
             name="address"
             placeholder="Address"
             value={formData.address}
             onChange={handleChange}
+            autoComplete="street-address"
           />
+
           <button type="submit">Pay ₹{formData.amount || "0.00"}</button>
         </form>
       </div>
