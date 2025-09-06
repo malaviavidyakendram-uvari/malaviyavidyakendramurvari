@@ -17,6 +17,7 @@ const Donate = () => {
 
   const [isRazorpayLoaded, setIsRazorpayLoaded] = useState(false);
   const navigate = useNavigate();
+
   // -------------------- Load Razorpay Script --------------------
   useEffect(() => {
     const script = document.createElement("script");
@@ -32,11 +33,42 @@ const Donate = () => {
   }, []);
 
   // -------------------- Handlers --------------------
+  // -------------------- Handlers --------------------
+  // ✅ Indian Currency Formatter
+  const formatIndianCurrency = (value) => {
+    if (!value) return "";
+    const num = value.replace(/\D/g, ""); // remove non-digits
+    if (!num) return "";
+
+    // ✅ Limit to 10 digits max to avoid UI expansion
+    const limited = num.slice(0, 10);
+
+    // Format in Indian system (e.g., 1,00,000 not 100,000)
+    return new Intl.NumberFormat("en-IN").format(Number(limited));
+  };
+
   const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+    const { name, value } = e.target;
+
+    if (name === "amount") {
+      const digitsOnly = value.replace(/\D/g, "").slice(0, 10); // keep max 10 digits
+      setFormData((prev) => ({
+        ...prev,
+        amount: formatIndianCurrency(digitsOnly),
+      }));
+    } else if (name === "pan") {
+      // Always uppercase PAN input
+      const panValue = value.toUpperCase().slice(0, 10); // PAN always 10 chars
+      setFormData((prev) => ({
+        ...prev,
+        pan: panValue,
+      }));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   const resetForm = () => {
@@ -50,19 +82,56 @@ const Donate = () => {
     });
   };
 
+  // ✅ Field Validation Function
+  const validateForm = () => {
+    const { amount, email, phone, name, pan, address } = formData;
+
+    const cleanAmount = amount.replace(/,/g, ""); // remove commas
+
+    if (!cleanAmount || Number(cleanAmount) <= 0) {
+      alert("⚠ Please enter a valid donation amount greater than 0.");
+      return false;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      alert("⚠ Please enter a valid email address.");
+      return false;
+    }
+
+    const phoneRegex = /^[6-9]\d{9}$/;
+    if (!phoneRegex.test(phone)) {
+      alert("⚠ Please enter a valid 10-digit phone number.");
+      return false;
+    }
+
+    if (name.trim().length < 3) {
+      alert("⚠ Name must be at least 3 characters long.");
+      return false;
+    }
+
+    if (pan) {
+      // ✅ PAN Regex: 5 letters + 4 digits + 1 letter, all caps
+      const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+      if (!panRegex.test(pan)) {
+        alert("⚠ Please enter a valid PAN number (e.g., AAAPA1234A).");
+        return false;
+      }
+    }
+
+    if (address.trim().length < 5) {
+      alert("⚠ Please enter a valid address (minimum 5 characters).");
+      return false;
+    }
+
+    return true;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // ✅ Basic validation
-    if (
-      !formData.amount ||
-      !formData.email ||
-      !formData.phone ||
-      !formData.name
-    ) {
-      alert("⚠ Please fill all required fields.");
-      return;
-    }
+    // ✅ Validate before submission
+    if (!validateForm()) return;
 
     if (!window.Razorpay) {
       alert("❌ Razorpay SDK not available. Please refresh and try again.");
@@ -70,9 +139,12 @@ const Donate = () => {
     }
 
     try {
+      const cleanAmount = formData.amount.replace(/,/g, ""); // remove commas
+
       // ✅ Save donor details in Firestore
       const docRef = await addDoc(collection(db, "Doner-details"), {
         ...formData,
+        amount: cleanAmount,
         date: new Date(),
         status: "INITIATED",
       });
@@ -81,20 +153,12 @@ const Donate = () => {
       // ✅ Razorpay options
       const options = {
         key: import.meta.env.VITE_RAZORPAY_KEY_ID,
-        amount: Math.round(Number(formData.amount) * 100),
+        amount: Math.round(Number(cleanAmount) * 100),
         currency: "INR",
         name: "School Donation",
         description: "Donation Payment",
         handler: function (response) {
           alert("🎉 Payment Successful! ID: " + response.razorpay_payment_id);
-
-          // ✅ Save status update (optional, if you want to update Firestore)
-          // updateDoc(doc(db, "Doner-details", docRef.id), {
-          //   status: "SUCCESS",
-          //   paymentId: response.razorpay_payment_id,
-          // });
-
-          // ✅ Reset form after success
           resetForm();
         },
         prefill: {
@@ -105,7 +169,6 @@ const Donate = () => {
         theme: { color: "#3399cc" },
       };
 
-      // ✅ Open Razorpay checkout
       const rzp1 = new window.Razorpay(options);
       rzp1.open();
     } catch (error) {
@@ -149,7 +212,6 @@ const Donate = () => {
           </p>
         </div>
 
-        {/* ✅ Donor History Button */}
         <button
           className="history-btn"
           onClick={() => navigate("/donordetails")}
@@ -163,13 +225,14 @@ const Donate = () => {
         <h3>Payment Details</h3>
         <form onSubmit={handleSubmit}>
           <input
-            type="number"
+            type="text"
             name="amount"
             placeholder="₹ Enter Amount"
             value={formData.amount}
             onChange={handleChange}
             required
             autoComplete="off"
+            className="amount-input"
           />
           <input
             type="email"
@@ -201,16 +264,18 @@ const Donate = () => {
           <input
             type="text"
             name="pan"
-            placeholder="PAN Number"
+            placeholder="PAN Number (e.g., AAAPA1234A)"
             value={formData.pan}
             onChange={handleChange}
             autoComplete="off"
+            maxLength={10}
           />
           <textarea
             name="address"
             placeholder="Address"
             value={formData.address}
             onChange={handleChange}
+            required
             autoComplete="street-address"
           />
 

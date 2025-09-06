@@ -59,6 +59,8 @@ const Header = () => {
                 aria-label="Facebook"
                 className="social-link"
                 title="Facebook"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <FaFacebookF />
               </a>
@@ -67,6 +69,8 @@ const Header = () => {
                 aria-label="Instagram"
                 className="social-link"
                 title="Instagram"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <FaInstagram />
               </a>
@@ -88,7 +92,7 @@ const Header = () => {
         <div className="header-container-2">
           <Link to="/" className="brand">
             <span className="brand-icon">
-            <img src="/assets/Blue and Brown Illustrative School Logo.png" />
+              <img src="/assets/Blue and Brown Illustrative School Logo.png" />
             </span>
             <h1 className="brand-name">Malaviya Vidyalaya Kendram</h1>
           </Link>

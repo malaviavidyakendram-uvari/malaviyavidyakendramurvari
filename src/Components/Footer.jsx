@@ -35,7 +35,6 @@ const Footer = () => {
             </a>
             <a
               href="mailto:malaviyavidyakendram.uvari@gmail.com"
-              target="_blank"
               rel="noreferrer"
             >
               <MdEmail />

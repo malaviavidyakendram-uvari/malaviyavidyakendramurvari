@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import emailjs from "@emailjs/browser";
 import "../Css/Home.css"; // Import CSS
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
   const [sending, setSending] = useState(false);
   const [status, setStatus] = useState({ type: "", msg: "" });
   const [formData, setFormData] = useState({
@@ -71,6 +73,59 @@ const Home = () => {
           <h3>"Your future begins here."</h3>
         </div>
       </div>
+
+      <section className="about-section">
+        <div className="about-box">
+          <h2>WHO WE ARE</h2>
+          <p>
+            Started in 1995 (L.K.G/U.K.G-40 kids) with a motto to have an
+            English medium school in the village to provide quality education
+            and enlighten the needy at Uvari, a seashore village between
+            Kanyakumari and Tiruchendur.
+          </p>
+          <p>
+            Funded by various groups including{" "}
+            <span className="about-highlight">TCS (Rs.1.5 lakhs)</span>, this
+            school currently has{" "}
+            <span className="about-highlight">
+              395 students from LKG to X standard
+            </span>
+            . Also has special tutors for Hindi and Computers with
+            <span className="about-highlight"> 2 school vans</span> for
+            commuting kids from 20 nearby villages.
+          </p>
+          <p>
+            It was started to enlighten the needy and evolved over the years and
+            has a{" "}
+            <span className="about-highlight">video conferencing facility</span>{" "}
+            which enables online teaching and provides a platform for anyone in
+            the world to teach the kids right from their home without losing
+            their comfort (Social service from home).
+          </p>
+          <p>
+            We are progressing to give the{" "}
+            <span className="about-highlight">best in class facility </span>
+            to our village kids to bring them in par with any urban kid – Trying
+            to bridge the gap.
+          </p>
+
+          <h2 className="donate-section-title">Donate to Educate</h2>
+          <p className="donate-description">
+            We would like to support the <b>Malaviya Vidyalaya Kendram </b>
+            as a small effort to express our gratitude for everything we’ve been
+            blessed with!
+          </p>
+
+          <div className="donate-button-wrapper">
+            <button
+              onClick={() => navigate("/donate")}
+              className="donate-button"
+            >
+              Donate Now
+            </button>
+          </div>
+        </div>
+      </section>
 
       {/* Tutor Registration */}
       <section className="registration-section">

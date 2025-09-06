@@ -1,4 +1,4 @@
-/* ===== Base */
+/* ================= Base ================= */
 .header {
   width: 100%;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
@@ -17,7 +17,7 @@
   justify-content: space-between; 
 }
 
-/* ===== Row 1: Top Bar */
+/* ================= Row 1: Top Bar ================= */
 .header-top {
   background: linear-gradient(90deg, #0b3a63, #0a2540, #0b3a63);
   color: #e9eef6;
@@ -81,7 +81,7 @@
 }
 .social-link:hover { transform: translateY(-1px); filter: brightness(1.05); }
 
-/* ===== Row 2: Main Bar */
+/* ================= Row 2: Main Bar ================= */
 .header-main {
   background: #ffffff;
 }
@@ -94,7 +94,7 @@
   padding: 0 16px;
 }
 
-/* Brand group (logo + name together on left) */
+/* Brand (logo + name) */
 .brand {
   display: flex;
   align-items: center;
@@ -117,11 +117,7 @@
   white-space: nowrap;
 }
 
-@media (min-width: 640px) {
-  .brand-name { font-size: 20px; }
-}
-
-/* Desktop navigation (right) */
+/* Desktop navigation */
 .header-right {
   display: flex;
   align-items: center;
@@ -129,13 +125,9 @@
 }
 
 .header-nav {
-  display: none;
+  display: flex;
   align-items: center;
   gap: 10px;
-}
-
-@media (min-width: 768px) {
-  .header-nav { display: flex; }
 }
 
 .nav-list {
@@ -183,7 +175,7 @@
 .cta-btn:hover { transform: translateY(-1px); filter: brightness(1.05); }
 .cta-icon { font-size: 18px; }
 
-/* ===== Mobile dropdown */
+/* ================= Mobile Dropdown ================= */
 .mobile-menu {
   max-height: 0;
   overflow: hidden;
@@ -234,10 +226,10 @@
   letter-spacing: .3px;
 }
 
-/* ===== Responsive Rules ===== */
+/* ================= Responsive Rules ================= */
 
-/* On mobile: hide phone + socials, keep only location */
-@media (max-width: 767.98px) {
+/* Phones + Tablets (<= 1024px) */
+@media (max-width: 1024px) {
   .top-right {
     display: none;
   }
@@ -255,14 +247,12 @@
     font-size: 16px;
     white-space: normal;
   }
-}
 
-/* Hamburger button hidden on desktop */
-.mobile-menu-btn {
-  display: none;
-}
+  /* Hide desktop nav, show hamburger */
+  .header-nav {
+    display: none !important;
+  }
 
-@media (max-width: 767.98px) {
   .mobile-menu-btn {
     display: inline-flex;
     align-items: center;
@@ -273,5 +263,20 @@
     border: none;
     cursor: pointer;
     margin-left: auto;
+  }
+}
+
+/* Desktop only (>= 1025px) */
+@media (min-width: 1025px) {
+  .header-nav {
+    display: flex;
+  }
+
+  .mobile-menu-btn {
+    display: none;
+  }
+
+  .brand-name {
+    font-size: 22px;
   }
 }

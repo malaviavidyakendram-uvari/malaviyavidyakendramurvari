@@ -108,6 +108,14 @@
   border-radius: 6px;
   outline: none;
   font-size: 14px;
+
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  flex-shrink: 1;         /* 🔑 prevents stretching */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .donation-form textarea {
@@ -127,6 +135,12 @@
 
 .donation-form button:hover {
   background: #145e4a;
+}
+
+/* Special styling for amount input */
+.amount-input {
+  font-weight: 600;
+  letter-spacing: 1px;
 }
 
 /* =========================
