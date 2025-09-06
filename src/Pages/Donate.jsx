@@ -64,10 +64,8 @@ const Donate = () => {
       return;
     }
 
-    if (!isRazorpayLoaded || !window.Razorpay) {
-      alert(
-        "❌ Razorpay SDK not loaded. Please check your internet and try again."
-      );
+    if (!window.Razorpay) {
+      alert("❌ Razorpay SDK not available. Please refresh and try again.");
       return;
     }
 
