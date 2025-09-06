@@ -72,6 +72,11 @@ const Home = () => {
           <h1>Welcome to Our School</h1>
           <h3>"Your future begins here."</h3>
         </div>
+
+        <div className="scroll-down">
+          <span className="arrow">↓</span>
+          <span className="text">Scroll Down</span>
+        </div>
       </div>
 
       <section className="about-section">
