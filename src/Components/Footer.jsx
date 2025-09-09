@@ -13,10 +13,13 @@ const Footer = () => {
         {/* Get in Touch */}
         <div className="footer-section">
           <h3>Get In Touch</h3>
-          <p>Malaviya Vidhyalaya Kendram ,Door No 52/4,South Street,Karai Suthu Uvari 627651.</p>
+          <p>
+            Malaviya vidya kendram 9/62-3, Aalamara north street, Karaichuthu
+            Uvari - 627 651, Tirunelveli dist
+          </p>
           <p>✉️ malaviyavidyakendram.uvari@gmail.com</p>
-          <p>📞 Ph-04637277137</p>
-         
+          <p>📞 Ph- 04637-210990</p>
+
           {/* Social Media */}
           <div className="footer-social">
             <a

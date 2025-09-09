@@ -9,28 +9,34 @@ const DonorDetails = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // ✅ Fetch donors ordered by date
     const q = query(collection(db, "Doner-details"), orderBy("date", "desc"));
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const donorData = snapshot.docs
-        .map((doc) => {
-          const data = doc.data();
-
-          return {
-            id: doc.id,
-            ...data,
-            // ✅ Normalize status
-            status: data.status ? data.status.toLowerCase() : "unknown",
-          };
-        })
-        // ✅ Only keep successful transactions
-        .filter((donor) => donor.status === "success");
-
+        .map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }))
+        .filter((donor) => donor.status?.toLowerCase() === "success"); // ✅ only success
       setDonors(donorData);
     });
 
     return () => unsubscribe();
   }, []);
+
+  // ✅ Format date to IST, 12-hour with AM/PM
+  const formatDate = (timestamp) => {
+    if (!timestamp?.toDate) return "-";
+    return timestamp.toDate().toLocaleString("en-IN", {
+      timeZone: "Asia/Kolkata",
+      hour12: true,
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+    });
+  };
 
   return (
     <div className="donor-container">
@@ -40,28 +46,16 @@ const DonorDetails = () => {
       ) : (
         <div className="table-responsive">
           <table className="donor-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Amount (₹)</th>
-                <th>Status</th>
-                <th>Date & Time</th>
-              </tr>
-            </thead>
             <tbody>
               {donors.map((donor) => (
                 <tr key={donor.id}>
-                  <td>{donor.name}</td>
-                  <td>₹{donor.amount}</td>
-                  <td>
+                  <td data-label="Name">Name: {donor.name}</td>
+                  <td data-label="Amount">Amount: ₹{donor.amount}</td>
+                  <td data-label="Status">
+                    Status:{" "}
                     <span className="status success">{donor.status}</span>
                   </td>
-                  <td>
-                    {/* ✅ Handle both Firestore Timestamp & string date */}
-                    {donor.date?.toDate
-                      ? donor.date.toDate().toLocaleString()
-                      : donor.date || "-"}
-                  </td>
+                  <td data-label="Date">Date: {formatDate(donor.date)}</td>
                 </tr>
               ))}
             </tbody>
@@ -69,7 +63,7 @@ const DonorDetails = () => {
         </div>
       )}
 
-      {/* ✅ Button to go to failure page */}
+      {/* Navigate to failure page */}
       <button
         className="history-btn"
         style={{ marginTop: "20px" }}

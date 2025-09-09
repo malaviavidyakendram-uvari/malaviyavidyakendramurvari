@@ -7,7 +7,7 @@ const DonorFailure = () => {
   const [failedDonors, setFailedDonors] = useState([]);
 
   useEffect(() => {
-    // ✅ Fetch only failed transactions
+    // ✅ Fetch failed + initiated transactions
     const q = query(collection(db, "Doner-details"), orderBy("date", "desc"));
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const donorData = snapshot.docs
@@ -15,42 +15,57 @@ const DonorFailure = () => {
           id: doc.id,
           ...doc.data(),
         }))
-        .filter((donor) => donor.status?.toLowerCase() === "failure"); // ✅ only failures
+        .filter((donor) => {
+          const status = donor.status?.toLowerCase();
+          return status === "failure" || status === "initiated";
+        });
       setFailedDonors(donorData);
     });
 
     return () => unsubscribe();
   }, []);
 
+  // ✅ Format date to IST, 12-hour with AM/PM
+  const formatDate = (timestamp) => {
+    if (!timestamp?.toDate) return "-";
+    return timestamp.toDate().toLocaleString("en-IN", {
+      timeZone: "Asia/Kolkata",
+      hour12: true,
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+    });
+  };
+
   return (
     <div className="donor-container">
-      <h2 className="donor-title">Failed Transactions</h2>
+      <h2 className="donor-title">Failed / Pending Transactions</h2>
       {failedDonors.length === 0 ? (
-        <p className="no-data">No failed donations yet.</p>
+        <p className="no-data">No failed or pending donations yet.</p>
       ) : (
         <div className="table-responsive">
           <table className="donor-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Amount (₹)</th>
-                <th>Status</th>
-                <th>Date & Time</th>
-              </tr>
-            </thead>
             <tbody>
               {failedDonors.map((donor) => (
                 <tr key={donor.id}>
-                  <td>{donor.name}</td>
-                  <td>₹{donor.amount}</td>
-                  <td>
-                    <span className="status pending">{donor.status}</span>
+                  <td data-label="Name">Name: {donor.name}</td>
+                  <td data-label="Amount">Amount: ₹{donor.amount}</td>
+                  <td data-label="Status">
+                    Status:{" "}
+                    <span
+                      className={`status ${
+                        donor.status?.toLowerCase() === "failure"
+                          ? "pending"
+                          : "pending"
+                      }`}
+                    >
+                      {donor.status}
+                    </span>
                   </td>
-                  <td>
-                    {donor.date?.toDate
-                      ? donor.date.toDate().toLocaleString()
-                      : "-"}
-                  </td>
+                  <td data-label="Date">Date: {formatDate(donor.date)}</td>
                 </tr>
               ))}
             </tbody>

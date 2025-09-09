@@ -93,7 +93,7 @@ const Home = () => {
             <span className="about-highlight">TCS (Rs.1.5 lakhs)</span>, this
             school currently has{" "}
             <span className="about-highlight">
-              395 students from LKG to X standard
+              180+ students from LKG to VIII standard
             </span>
             . Also has special tutors for Hindi and Computers with
             <span className="about-highlight"> 2 school vans</span> for

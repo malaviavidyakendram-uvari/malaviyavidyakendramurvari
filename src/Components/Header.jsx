@@ -35,21 +35,23 @@ const Header = () => {
       {/* ROW 1 — TOP BAR */}
       <div className="header-top">
         <div className="header-container">
+          {/* Location (desktop only, moved with CSS in mobile) */}
           <div className="top-left">
             <span className="icon">
               <IoLocationSharp />
             </span>
             <span className="top-text">
-              No 52/4, South Street, Karai Suthu Uvari 627651.
+              No 9/62-3, Aalamara north street, Karaichuthu Uvari - 627 651,
+              Tirunelveli dist
             </span>
           </div>
 
-          {/* Desktop only — phone + socials */}
+          {/* Phone + Socials */}
           <div className="top-right">
             <div className="phone">
               <FiPhone className="icon" />
-              <a href="tel:04637277137" className="top-text">
-                Ph-04637277137
+              <a href="tel:04637210990" className="top-text">
+                Ph - 04637-210990
               </a>
             </div>
 
@@ -86,7 +88,6 @@ const Header = () => {
           </div>
         </div>
       </div>
-
       {/* ROW 2 — MAIN BAR */}
       <div className="header-main">
         <div className="header-container-2">
@@ -94,7 +95,7 @@ const Header = () => {
             <span className="brand-icon">
               <img src="/assets/Blue and Brown Illustrative School Logo.png" />
             </span>
-            <h1 className="brand-name">Malaviya Vidyalaya Kendram</h1>
+            <h1 className="brand-name">Malaviya Vidya Kendram</h1>
           </Link>
 
           {/* Desktop nav */}

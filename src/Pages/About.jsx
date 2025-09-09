@@ -14,9 +14,9 @@ const About = () => {
             English medium school in the village to provide quality education
             and enlighten the needy at Uvari, a seashore village between
             Kanyakumari and Tiruchendur. Funded by various groups including TCS
-            (Rs.1.5 lakhs), this school currently has 395 students from LKG to X
-            standard. Also has special tutors for Hindi and Computers with 2
-            school vans for commuting kids from 20 nearby villages.
+            (Rs.1.5 lakhs), this school currently has 180+ students from LKG to
+            VIII standard. Also has special tutors for Hindi and Computers with
+            2 school vans for commuting kids from 20 nearby villages.
           </p>
           <p>
             It was started to enlighten the needy and evolved over the years and
@@ -35,11 +35,13 @@ const About = () => {
             Std I to V - Rs.310 / Std VI-VIII - Rs.340 / X - Rs.350 (affordable)
           </p>
           <p>
-            <strong>Address:</strong> SH 176, Karaichuthuvari, Tamil Nadu 627651
+            <strong>Address:</strong> 9/62-3, Aalamara north street, Karaichuthu
+            Uvari - 627 651, Tirunelveli dist
             <br />
-            <strong>Ph:</strong> 04637 277 137
+            <strong>Ph:</strong>  04637-210990
+
             <br />
-            <strong>Government Registration No:</strong> 829/99
+            <strong>Recog OBE:</strong> 019061
             <br />
             <strong>Authorized Signatory:</strong> A.K. JeyaPandi
           </p>

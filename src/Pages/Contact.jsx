@@ -54,7 +54,6 @@ const Contact = () => {
           message: "",
         }); // reset
 
-       
         setTimeout(() => {
           setStatus({ type: "", msg: "" });
         }, 3000);
@@ -62,7 +61,6 @@ const Contact = () => {
       .catch(() => {
         setStatus({ type: "error", msg: "Failed to send. Please try again." });
 
-      
         setTimeout(() => {
           setStatus({ type: "", msg: "" });
         }, 3000);
@@ -82,13 +80,15 @@ const Contact = () => {
         <div className="tag-card">
           <FaPhone className="tag-icon" />
           <h4>Phone No</h4>
-          <p>Ph-04637277137</p>
-          <p>Contact-9487868148</p>
+          <p>Ph-04637-210990</p>
         </div>
         <div className="tag-card">
           <FaMapMarkerAlt className="tag-icon" />
           <h4>Address</h4>
-          <p>Door No 52/4,South Street,Karai Suthu Uvari 627651.</p>
+          <p>
+            9/62-3, Aalamara north street, Karaichuthu Uvari - 627 651,
+            Tirunelveli dist
+          </p>
         </div>
       </div>
 
