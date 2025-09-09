@@ -75,12 +75,12 @@ const Contact = () => {
         <div className="tag-card">
           <FaEnvelope className="tag-icon" />
           <h4>Email</h4>
-          <p>malaviyavidyakendram.uvari@gmail.com</p>
+          <p><a href="mailto:malaviyavidyakendram.uvari@gmail.com">✉️ malaviyavidyakendram.uvari@gmail.com</a></p>
         </div>
         <div className="tag-card">
           <FaPhone className="tag-icon" />
           <h4>Phone No</h4>
-          <p>Ph-04637-210990</p>
+          <p><a href="tel:04637210990">📞 Ph- 04637-210990</a></p>
         </div>
         <div className="tag-card">
           <FaMapMarkerAlt className="tag-icon" />
