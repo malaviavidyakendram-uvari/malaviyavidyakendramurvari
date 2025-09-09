@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../Css/Donate.css";
 import { db } from "../Pages/firebase";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, doc, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 
 const Donate = () => {
@@ -33,17 +33,11 @@ const Donate = () => {
   }, []);
 
   // -------------------- Handlers --------------------
-  // -------------------- Handlers --------------------
-  // ✅ Indian Currency Formatter
   const formatIndianCurrency = (value) => {
     if (!value) return "";
-    const num = value.replace(/\D/g, ""); // remove non-digits
+    const num = value.replace(/\D/g, "");
     if (!num) return "";
-
-    // ✅ Limit to 10 digits max to avoid UI expansion
     const limited = num.slice(0, 10);
-
-    // Format in Indian system (e.g., 1,00,000 not 100,000)
     return new Intl.NumberFormat("en-IN").format(Number(limited));
   };
 
@@ -51,14 +45,13 @@ const Donate = () => {
     const { name, value } = e.target;
 
     if (name === "amount") {
-      const digitsOnly = value.replace(/\D/g, "").slice(0, 10); // keep max 10 digits
+      const digitsOnly = value.replace(/\D/g, "").slice(0, 10);
       setFormData((prev) => ({
         ...prev,
         amount: formatIndianCurrency(digitsOnly),
       }));
     } else if (name === "pan") {
-      // Always uppercase PAN input
-      const panValue = value.toUpperCase().slice(0, 10); // PAN always 10 chars
+      const panValue = value.toUpperCase().slice(0, 10);
       setFormData((prev) => ({
         ...prev,
         pan: panValue,
@@ -82,11 +75,9 @@ const Donate = () => {
     });
   };
 
-  // ✅ Field Validation Function
   const validateForm = () => {
     const { amount, email, phone, name, pan, address } = formData;
-
-    const cleanAmount = amount.replace(/,/g, ""); // remove commas
+    const cleanAmount = amount.replace(/,/g, "");
 
     if (!cleanAmount || Number(cleanAmount) <= 0) {
       alert("⚠ Please enter a valid donation amount greater than 0.");
@@ -111,7 +102,6 @@ const Donate = () => {
     }
 
     if (pan) {
-      // ✅ PAN Regex: 5 letters + 4 digits + 1 letter, all caps
       const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
       if (!panRegex.test(pan)) {
         alert("⚠ Please enter a valid PAN number (e.g., AAAPA1234A).");
@@ -130,7 +120,6 @@ const Donate = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // ✅ Validate before submission
     if (!validateForm()) return;
 
     if (!window.Razorpay) {
@@ -139,16 +128,16 @@ const Donate = () => {
     }
 
     try {
-      const cleanAmount = formData.amount.replace(/,/g, ""); // remove commas
+      const cleanAmount = formData.amount.replace(/,/g, "");
 
-      // ✅ Save donor details in Firestore
+      // ✅ Save donor entry first (status: initiated)
       const docRef = await addDoc(collection(db, "Doner-details"), {
         ...formData,
         amount: cleanAmount,
         date: new Date(),
-        status: "INITIATED",
+        status: "initiated",
       });
-      console.log("✅ Donor data stored with ID:", docRef.id);
+      console.log("✅ Donor entry created:", docRef.id);
 
       // ✅ Razorpay options
       const options = {
@@ -157,9 +146,38 @@ const Donate = () => {
         currency: "INR",
         name: "School Donation",
         description: "Donation Payment",
-        handler: function (response) {
+        handler: async function (response) {
+          // ✅ Payment success → update status
+          await setDoc(
+            doc(db, "Doner-details", docRef.id),
+            {
+              ...formData,
+              amount: cleanAmount,
+              date: new Date(),
+              status: "success",
+              paymentId: response.razorpay_payment_id,
+            },
+            { merge: true }
+          );
+
           alert("🎉 Payment Successful! ID: " + response.razorpay_payment_id);
           resetForm();
+        },
+        modal: {
+          ondismiss: async function () {
+            // ✅ Payment failed / cancelled → mark failure
+            await setDoc(
+              doc(db, "Doner-details", docRef.id),
+              {
+                ...formData,
+                amount: cleanAmount,
+                date: new Date(),
+                status: "failure",
+              },
+              { merge: true }
+            );
+            console.warn("⚠️ Payment failed or cancelled.");
+          },
         },
         prefill: {
           name: formData.name,

@@ -9,7 +9,8 @@ import Contact from './Pages/Contact';
 import About from './Pages/About';
 import Footer from './Components/Footer';
 import Donate from './Pages/Donate';
-import DonorDetails from './Pages/DonerDetails.jsx'
+import DonorDetails from './Pages/DonerDetails.jsx';
+import DonorFailure from './Pages/DonorFailure.jsx'
 import ScrollToTop from "./Components/ScrollToTop";
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/Donate" element={<Donate />} />
         <Route path="/DonorDetails" element={<DonorDetails />} />
+        <Route path="/DonorFailure" element={<DonorFailure />} />
       </Routes>
       <Footer />
     </div>

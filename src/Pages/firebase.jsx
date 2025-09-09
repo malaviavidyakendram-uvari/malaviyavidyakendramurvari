@@ -1,6 +1,6 @@
 // src/config/firebase.js
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, enableIndexedDbPersistence } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -13,5 +13,14 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+
+// ✅ Enable offline cache
+enableIndexedDbPersistence(db).catch((err) => {
+  if (err.code === "failed-precondition") {
+    console.warn("⚠️ Persistence failed — multiple tabs open.");
+  } else if (err.code === "unimplemented") {
+    console.warn("⚠️ Persistence not available in this browser.");
+  }
+});
 
 export { db };
