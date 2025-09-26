@@ -5,7 +5,7 @@ import { MdEmail } from "react-icons/md";
 import "../Css/Footer.css";
 
 const Footer = () => {
-  const currentYear = new Date().getFullYear(); // ✅ Get current year
+  const currentYear = new Date().getFullYear(); 
 
   return (
     <footer className="footer">
@@ -17,7 +17,7 @@ const Footer = () => {
             Malaviya vidya kendram 9/62-3, Aalamara north street, Karaichuthu
             Uvari - 627 651, Tirunelveli dist
           </p>
-          <p><a href="mailto:malaviyavidyakendram.uvari@gmail.com">✉️ malaviyavidyakendram.uvari@gmail.com</a></p>
+          <p><a href="mailto:malaviavidyakendram@gmail.com">✉️ malaviavidyakendram@gmail.com</a></p>
           <p><a href="tel:04637210990">📞 Ph- 04637-210990</a></p>
 
           {/* Social Media */}

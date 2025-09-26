@@ -19,15 +19,57 @@ const Home = () => {
   const handleChange = (e) =>
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 
+  // ✅ Validation before submit
+  const validateForm = () => {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phonePattern = /^[0-9]{10}$/;
+    const namePattern = /^[A-Za-z\s]+$/;
+
+    if (!namePattern.test(formData.fullName)) {
+      setStatus({ type: "error", msg: "Name must contain only letters." });
+      return false;
+    }
+
+    if (!emailPattern.test(formData.email)) {
+      setStatus({ type: "error", msg: "Please enter a valid email address." });
+      return false;
+    }
+
+    if (!phonePattern.test(formData.phone)) {
+      setStatus({
+        type: "error",
+        msg: "Phone number must be exactly 10 digits (numbers only).",
+      });
+      return false;
+    }
+
+    if (formData.country.trim() === "") {
+      setStatus({ type: "error", msg: "Please enter your country." });
+      return false;
+    }
+
+    if (formData.interest.trim() === "") {
+      setStatus({ type: "error", msg: "Please enter your interested area." });
+      return false;
+    }
+
+    return true;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSending(true);
     setStatus({ type: "", msg: "" });
 
+    if (!validateForm()) {
+      setSending(false);
+      return;
+    }
+
     try {
-      const SERVICE_ID = "service_3u23jnq";
-      const TEMPLATE_ID = "template_orn2b54";
-      const PUBLIC_KEY = "BMpW4NjLKBbPvjGwP";
+      const SERVICE_ID = "service_v64eyoh";
+      const TEMPLATE_ID = "template_1a7qrda";
+      const PUBLIC_KEY = "vPN7vm7osHakSvz6c";
 
       await emailjs.send(SERVICE_ID, TEMPLATE_ID, formData, PUBLIC_KEY);
 
@@ -148,6 +190,7 @@ const Home = () => {
           )}
 
           <form onSubmit={handleSubmit} className="form-grid">
+            {/* Name - only letters */}
             <input
               name="fullName"
               value={formData.fullName}
@@ -156,8 +199,11 @@ const Home = () => {
               placeholder="Your Name"
               type="text"
               className="form-input"
+              pattern="[A-Za-z\s]+"
+              title="Name should only contain letters and spaces"
             />
 
+            {/* Email - must be valid */}
             <input
               name="email"
               value={formData.email}
@@ -168,16 +214,26 @@ const Home = () => {
               className="form-input"
             />
 
+            {/* Phone - only 10 digits */}
             <input
               name="phone"
               value={formData.phone}
-              onChange={handleChange}
+              onChange={(e) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  phone: e.target.value.replace(/\D/g, "").slice(0, 10), // block letters/symbols
+                }))
+              }
               required
               placeholder="Phone Number"
               type="tel"
               className="form-input"
+              maxLength="10"
+              pattern="[0-9]{10}"
+              title="Phone number must be exactly 10 digits"
             />
 
+            {/* Country */}
             <input
               name="country"
               value={formData.country}
@@ -195,6 +251,7 @@ const Home = () => {
               <option value="Canada" />
             </datalist>
 
+            {/* Interest */}
             <input
               name="interest"
               value={formData.interest}
@@ -205,6 +262,7 @@ const Home = () => {
               className="form-input form-span"
             />
 
+            {/* Comments */}
             <textarea
               name="comments"
               value={formData.comments}
