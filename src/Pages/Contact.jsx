@@ -14,7 +14,7 @@ const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    phone: "", // 🔹 Added phone field
+    phone: "",
     subject: "",
     message: "",
   });
@@ -23,16 +23,59 @@ const Contact = () => {
   const [status, setStatus] = useState({ type: "", msg: "" });
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    let newValue = value;
+
+    if (name === "name") {
+      newValue = value.replace(/[^a-zA-Z\s]/g, ""); // only letters & spaces
+    }
+    if (name === "phone") {
+      newValue = value.replace(/[^0-9]/g, "").slice(0, 10); // only digits, max 10
+    }
+    if (name === "subject") {
+      newValue = value.replace(/[^a-zA-Z0-9\s]/g, ""); // letters, numbers & spaces
+    }
+
+    setFormData({ ...formData, [name]: newValue });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // 🔹 Extra validation before sending
+    if (!/^[a-zA-Z\s]+$/.test(formData.name)) {
+      setStatus({ type: "error", msg: "Name must contain only letters." });
+      return;
+    }
+    if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
+      setStatus({ type: "error", msg: "Invalid email address." });
+      return;
+    }
+    if (!/^\d{10}$/.test(formData.phone)) {
+      setStatus({ type: "error", msg: "Phone must be exactly 10 digits." });
+      return;
+    }
+    if (formData.subject.trim().length < 3) {
+      setStatus({
+        type: "error",
+        msg: "Subject must be at least 3 characters.",
+      });
+      return;
+    }
+    if (formData.message.trim().length < 10) {
+      setStatus({
+        type: "error",
+        msg: "Message must be at least 10 characters.",
+      });
+      return;
+    }
+
     setSending(true);
 
-    const serviceID = "service_3u23jnq";
-    const templateID = "template_nstaec3";
-    const publicKey = "BMpW4NjLKBbPvjGwP";
+    const serviceID = "service_v64eyoh";
+    const templateID = "template_6iafhj9";
+    const publicKey = "vPN7vm7osHakSvz6c";
 
     const templateParams = {
       from_name: formData.name,
@@ -52,20 +95,22 @@ const Contact = () => {
           phone: "",
           subject: "",
           message: "",
-        }); // reset
-
-        setTimeout(() => {
-          setStatus({ type: "", msg: "" });
-        }, 3000);
+        });
+        setTimeout(() => setStatus({ type: "", msg: "" }), 3000);
       })
       .catch(() => {
         setStatus({ type: "error", msg: "Failed to send. Please try again." });
-
-        setTimeout(() => {
-          setStatus({ type: "", msg: "" });
-        }, 3000);
+        setTimeout(() => setStatus({ type: "", msg: "" }), 3000);
       })
       .finally(() => setSending(false));
+
+    setFormData({
+      name: "",
+      email: "",
+      phone: "",
+      subject: "",
+      message: "",
+    });
   };
 
   return (
@@ -75,12 +120,18 @@ const Contact = () => {
         <div className="tag-card">
           <FaEnvelope className="tag-icon" />
           <h4>Email</h4>
-          <p><a href="mailto:malaviavidyakendram@gmail.com">✉️ malaviavidyakendram@gmail.com</a></p>
+          <p>
+            <a href="mailto:malaviavidyakendram@gmail.com">
+              ✉️ malaviavidyakendram@gmail.com
+            </a>
+          </p>
         </div>
         <div className="tag-card">
           <FaPhone className="tag-icon" />
           <h4>Phone No</h4>
-          <p><a href="tel:04637210990">📞 Ph- 04637-210990</a></p>
+          <p>
+            <a href="tel:04637210990">📞 Ph- 04637-210990</a>
+          </p>
         </div>
         <div className="tag-card">
           <FaMapMarkerAlt className="tag-icon" />
@@ -135,7 +186,6 @@ const Contact = () => {
               />
             </div>
 
-            {/* 🔹 Added Phone Number Field */}
             <div className="input-group">
               <FaPhone className="icon" />
               <input
