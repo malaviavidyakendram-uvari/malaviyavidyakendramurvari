@@ -127,6 +127,9 @@ const Donate = () => {
       return;
     }
 
+    // ✅ Clear form immediately after clicking Pay
+    resetForm();
+
     try {
       const cleanAmount = formData.amount.replace(/,/g, "");
 
@@ -161,7 +164,6 @@ const Donate = () => {
           );
 
           alert("🎉 Payment Successful! ID: " + response.razorpay_payment_id);
-          resetForm();
         },
         modal: {
           ondismiss: async function () {

@@ -88,61 +88,43 @@
 /* ==================================
    Mobile View Layout
 ================================== */
+/* ==================================
+   Mobile View Layout
+================================== */
 @media (max-width: 768px) {
+  /* Principal & Vice Principal */
   .management-top {
     display: grid;
-    grid-template-columns: 1fr; /* Single column for top staff */
+    grid-template-columns: repeat(2, 1fr); /* ✅ 2 cards per row */
     gap: 15px;
     justify-items: center;
   }
 
-  /* Make Correspondent (1st card) centered */
-  .management-top .management-card:nth-child(1) {
-    grid-column: 1 / -1;
-    justify-self: center;
-  }
-
-  /* Place Secretary & Treasurer into 2-column layout below */
-  .management-top .management-card:nth-child(2),
-  .management-top .management-card:nth-child(3) {
-    display: inline-block;
-    width: 100%;
-  }
-
-  /* Wrap Secretary & Treasurer into a 2-column row */
-  .management-top {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  /* But ensure Correspondent still spans full width */
-  .management-top .management-card:nth-child(1) {
-    grid-column: 1 / -1;
-  }
-
+  /* Teachers, Clerk, Aunties */
   .management-grid {
-    grid-template-columns: repeat(2, 1fr);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* ✅ 2 cards per row */
     gap: 15px;
+    justify-items: center;
   }
 }
 
 @media (max-width: 480px) {
   .management-container {
-    padding: 40px 10px;
+    padding: 20px 10px;
   }
 
+  /* ✅ Still keep 2 cards per row, even on small phones */
   .management-top,
   .management-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-  }
-
-  /* Ensure Correspondent stays centered full row */
-  .management-top .management-card:nth-child(1) {
-    grid-column: 1 / -1;
+    gap: 12px;
   }
 
   .management-card {
     max-width: 100%;
   }
 }
+
+
 

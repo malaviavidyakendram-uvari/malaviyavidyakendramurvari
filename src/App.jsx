@@ -3,7 +3,6 @@ import { Routes, Route } from "react-router-dom";
 import Header from './Components/Header';
 import Home from './Pages/Home';
 import Management from './Pages/Management';
-import Teachers from './Pages/Teachers';
 import History from './Pages/History';
 import Contact from './Pages/Contact';
 import About from './Pages/About';
@@ -21,7 +20,6 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/management" element={<Management />} />
-        <Route path="/teachers" element={<Teachers />} />
         <Route path="/history" element={<History />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
