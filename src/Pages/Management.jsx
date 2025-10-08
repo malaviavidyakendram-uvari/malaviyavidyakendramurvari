@@ -1,29 +1,47 @@
-import React from "react";
-import { FaUserTie, FaUserFriends } from "react-icons/fa"; // icons
+import React, { useEffect, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../Pages/firebase";
 import "../Css/Management.css";
 
 const Management = () => {
-  // Top staff → Principal & Vice Principal
-  const topStaff = [
-    { name: "Selvan. S. Akilan, B.Sc., B.Ed.", role: "Principal", icon: <FaUserTie /> },
-    { name: "Selvi. S. Pavithra, M.Com., B.Ed.", role: "Vice Principal", icon: <FaUserTie /> },
-  ];
+  const [staff, setStaff] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // Other staff members
-  const members = [
-    { name: "Smt. D. Jeya Selvi, B.A.", role: "Teacher", icon: <FaUserFriends /> },
-    { name: "Selvi. S. Saravana Sundari, B.A.", role: "Teacher", icon: <FaUserFriends /> },
-    { name: "Selvi. S. Sneka, B.E.", role: "Teacher", icon: <FaUserFriends /> },
-    { name: "Selvi. T. Sivathanusiya, M.A.", role: "Teacher", icon: <FaUserFriends /> },
-    { name: "Selvi. M. Gunachithra, B.A., B.Ed.", role: "Teacher", icon: <FaUserFriends /> },
-    { name: "Smt. S. Jeya Sree, B.Sc., B.Ed.", role: "Teacher", icon: <FaUserFriends /> },
-    { name: "Selvi. R. Valarmathi, B.Sc., B.Ed.", role: "Teacher", icon: <FaUserFriends /> },
-    { name: "Selvi. L. Soundarya, M.Sc.", role: "Teacher", icon: <FaUserFriends /> },
-    { name: "Smt. S. Ajantha, B.Com., Pre-PTC", role: "Teacher", icon: <FaUserFriends /> },
-    { name: "Selvi. S. Ajitha, B.Sc.", role: "Clerk", icon: <FaUserFriends /> },
-    { name: "Smt. S. Sarathadevi", role: "Aunty", icon: <FaUserFriends /> },
-    { name: "Smt. T. Leelavathi", role: "Aunty", icon: <FaUserFriends /> },
-  ];
+  // 🔹 Fetch data from Firestore
+  useEffect(() => {
+    const fetchStaffData = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "staff-data"));
+        const staffList = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setStaff(staffList);
+      } catch (error) {
+        console.error("Error fetching staff data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStaffData();
+  }, []);
+
+  if (loading) {
+    return <p className="loading-text">Loading staff data...</p>;
+  }
+
+  // 🔹 Separate top staff and others (if your Firestore has a "role" field)
+  const topStaff = staff.filter(
+    (person) =>
+      person.role?.toLowerCase().includes("principal") ||
+      person.role?.toLowerCase().includes("vice principal")
+  );
+  const members = staff.filter(
+    (person) =>
+      !person.role?.toLowerCase().includes("principal") &&
+      !person.role?.toLowerCase().includes("vice principal")
+  );
 
   return (
     <div className="management-container">
@@ -31,9 +49,15 @@ const Management = () => {
 
       {/* Principal & Vice Principal */}
       <div className="management-top">
-        {topStaff.map((person, index) => (
-          <div className="management-card" key={index}>
-            <div className="icon-wrapper">{person.icon}</div>
+        {topStaff.map((person) => (
+          <div className="management-card" key={person.id}>
+            <div className="image-wrapper">
+              <img
+                src={person.image}
+                alt={person.name}
+                className="profile-photo"
+              />
+            </div>
             <div className="management-info">
               <h2>{person.name}</h2>
               <p>{person.role}</p>
@@ -44,9 +68,15 @@ const Management = () => {
 
       {/* Other Staff */}
       <div className="management-grid">
-        {members.map((person, index) => (
-          <div className="management-card" key={index}>
-            <div className="icon-wrapper">{person.icon}</div>
+        {members.map((person) => (
+          <div className="management-card" key={person.id}>
+            <div className="image-wrapper">
+              <img
+                src={person.image}
+                alt={person.name}
+                className="profile-photo"
+              />
+            </div>
             <div className="management-info">
               <h2>{person.name}</h2>
               <p>{person.role}</p>
