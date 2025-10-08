@@ -28,7 +28,12 @@ const Management = () => {
   }, []);
 
   if (loading) {
-    return <p className="loading-text">Loading staff data...</p>;
+    return (
+      <div className="loading-container">
+        <div className="spinner"></div>
+        <p className="loading-text">Loading data...</p>
+      </div>
+    );
   }
 
   // 🔹 Separate top staff and others (if your Firestore has a "role" field)
