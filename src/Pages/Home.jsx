@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import emailjs from "@emailjs/browser";
-import "../Css/Home.css"; // Import CSS
+import "../Css/Home.css";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
@@ -15,6 +15,23 @@ const Home = () => {
     interest: "",
     comments: "",
   });
+
+  // ✅ Slideshow images
+  const slideshowImages = [
+    "/assets/schoolback.jpg",
+    "/assets/schoolback2.jpg",
+    "/assets/Schoolback3.jpg",
+  ];
+
+  const [currentImage, setCurrentImage] = useState(0);
+
+  // ✅ Automatically change the image every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % slideshowImages.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   const handleChange = (e) =>
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -75,7 +92,7 @@ const Home = () => {
 
       setStatus({
         type: "success",
-        msg: "Application submitted successfully ✅",
+        msg: "Application submitted successfully ",
       });
 
       setFormData({
@@ -106,7 +123,7 @@ const Home = () => {
       <div
         className="hero-section"
         style={{
-          backgroundImage: `url('/assets/premium_photo-1663050763436-818382a24bb8.avif')`,
+         backgroundImage: `url(${slideshowImages[currentImage]})`,
         }}
       >
         <div className="overlay"></div>
@@ -221,7 +238,7 @@ const Home = () => {
               onChange={(e) =>
                 setFormData((prev) => ({
                   ...prev,
-                  phone: e.target.value.replace(/\D/g, "").slice(0, 10), // block letters/symbols
+                  phone: e.target.value.replace(/\D/g, "").slice(0, 10),
                 }))
               }
               required
@@ -272,11 +289,7 @@ const Home = () => {
             />
 
             <div className="form-button-wrapper">
-              <button
-                type="submit"
-                disabled={sending}
-                className="submit-button"
-              >
+              <button type="submit" disabled={sending} className="submit-button">
                 {sending ? "Sending..." : "Submit"}
               </button>
             </div>

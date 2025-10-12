@@ -1,5 +1,5 @@
 import React from "react";
-import "../Css/History.css"; // optional CSS
+import "../Css/History.css"; 
 
 const historyData = [
   {

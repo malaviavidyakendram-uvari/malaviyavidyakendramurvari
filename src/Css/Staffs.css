@@ -1,17 +1,15 @@
-/* src/Css/Management.css */
-
 /* Google Fonts Import */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Montserrat:wght@400;500;700&display=swap');
 
 /* ===============================
-  Management Section Layout */
-.management-container {
+  Staffs Section Layout */
+.staffs-container {
   text-align: center;
   padding: 50px 20px;
   background: #f9f9f9;
 }
 
-.management-title {
+.staffs-title {
   font-size: 2rem;
   color: #2c3e50;
   margin-bottom: 40px;
@@ -19,15 +17,19 @@
   letter-spacing: 1px;
 }
 
-.management-subtitle {
-  font-size: 1.2rem;
-  color: #555;
+/* ===============================
+  Top Staff (Principal & Vice Principal) */
+.staffs-top {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
   margin-bottom: 50px;
 }
 
 /* ===============================
-  Grid for Management Staff */
-.management-grid {
+  Grid for Other Staff */
+.staffs-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 30px;
@@ -39,9 +41,9 @@
 
 /* ===============================
   Profile Cards */
-.management-card {
+.staffs-card {
   background: #fff;
-  border-radius: 5px;
+  border-radius: 20px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
   overflow: hidden;
   transition: all 0.3s ease;
@@ -51,7 +53,7 @@
   margin: 0 auto;
 }
 
-.management-card:hover {
+.staffs-card:hover {
   transform: translateY(-8px);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
@@ -60,7 +62,7 @@
   Image Styling */
 .image-wrapper {
   width: 100%;
-  height: 350px; /* slightly taller for desktop */
+  height: 300px;
   overflow: hidden;
   position: relative;
 }
@@ -69,34 +71,50 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: top center; /* ensure head is visible */
   pointer-events: none;
   user-select: none;
   -webkit-user-drag: none;
 }
 
-/* ===============================
-  Name Section */
-.management-info {
-  padding: 15px; /* slightly reduced padding */
+/* Transparent overlay to block download attempts */
+.image-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparent;
+  z-index: 2;
+  pointer-events: all;
 }
 
-.management-info h2 {
-  font-size: 0.95rem; /* desktop font size */
+/* ===============================
+  Info Section */
+.staffs-info {
+  padding: 20px;
+}
+
+.staffs-info h2 {
+  font-size: 1.1rem;
   font-weight: 600;
   color: #333;
-  margin: 0;
+  margin-bottom: 5px;
   text-transform: uppercase;
   font-family: 'Montserrat', sans-serif;
-  white-space: nowrap;       /* desktop: single line */
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-align: center;
+}
+
+.staffs-info p {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0078d7;
+  margin: 0;
+  text-transform: capitalize;
+  font-family: 'Roboto', sans-serif;
 }
 
 /* ===============================
-  Loading Spinner Styles for Management
-================================== */
+  Loading Spinner Styles */
 .loading-container {
   display: flex;
   flex-direction: column;
@@ -129,11 +147,12 @@
   color: #2c3e50;
 }
 
-
 /* ===============================
-  Responsive Design: 2 cards per row on mobile */
+  Responsive Design: 2 cards per row on mobile
+================================== */
 @media (max-width: 480px) {
-  .management-grid {
+  .staffs-top,
+  .staffs-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;
@@ -141,26 +160,27 @@
     width: 100%;
   }
 
-  .management-card {
+  .staffs-card {
     max-width: 100%;
     margin: 0;
-    border-radius: 0; /* remove border radius on mobile */
-    overflow: hidden; /* ensure content fits properly */
   }
 
   .image-wrapper {
     height: 220px;
   }
 
-  .management-info {
+  .staffs-info {
     padding: 12px;
   }
 
-  .management-info h2 {
-    font-size: 0.7rem;        /* slightly smaller for mobile */
-    white-space: normal;      /* allow wrapping */
-    overflow: visible;
-    text-overflow: unset;
+  .staffs-info h2 {
+    font-size: 0.8rem;
     line-height: 1.2;
+    text-align: center;
+  }
+
+  .staffs-info p {
+    font-size: 0.95rem;
+    text-align: center;
   }
 }

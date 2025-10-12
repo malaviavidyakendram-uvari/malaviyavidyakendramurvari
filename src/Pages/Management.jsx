@@ -1,90 +1,55 @@
+// src/Pages/Management.jsx
 import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../Pages/firebase";
 import "../Css/Management.css";
 
 const Management = () => {
-  const [staff, setStaff] = useState([]);
+  const [staffs, setStaffs] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // 🔹 Fetch data from Firestore
   useEffect(() => {
-    const fetchStaffData = async () => {
+    const fetchStaffs = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, "staff-data"));
-        const staffList = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setStaff(staffList);
-      } catch (error) {
-        console.error("Error fetching staff data:", error);
+        const collectionRef = collection(db, "Management-staffs");
+        const snapshot = await getDocs(collectionRef);
+        const staffList = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setStaffs(staffList);
+      } catch (err) {
+        console.error("Error fetching management staff:", err);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchStaffData();
+    fetchStaffs();
   }, []);
 
   if (loading) {
     return (
       <div className="loading-container">
         <div className="spinner"></div>
-        <p className="loading-text">Loading data...</p>
+        <p className="loading-text">Loading management staff...</p>
       </div>
     );
   }
 
-  // 🔹 Separate top staff and others (if your Firestore has a "role" field)
-  const topStaff = staff.filter(
-    (person) =>
-      person.role?.toLowerCase().includes("principal") ||
-      person.role?.toLowerCase().includes("vice principal")
-  );
-  const members = staff.filter(
-    (person) =>
-      !person.role?.toLowerCase().includes("principal") &&
-      !person.role?.toLowerCase().includes("vice principal")
-  );
-
   return (
     <div className="management-container">
-      <h1 className="management-title">Staff Members</h1>
-
-      {/* Principal & Vice Principal */}
-      <div className="management-top">
-        {topStaff.map((person) => (
-          <div className="management-card" key={person.id}>
-            <div className="image-wrapper">
-              <img
-                src={person.image}
-                alt={person.name}
-                className="profile-photo"
-              />
-            </div>
-            <div className="management-info">
-              <h2>{person.name}</h2>
-              <p>{person.role}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Other Staff */}
+      <h1 className="management-title">Management Staffs</h1>
+    
       <div className="management-grid">
-        {members.map((person) => (
-          <div className="management-card" key={person.id}>
+        {staffs.map((staff) => (
+          <div key={staff.id} className="management-card">
             <div className="image-wrapper">
               <img
-                src={person.image}
-                alt={person.name}
+                src={staff.image}
+                alt={staff.name}
                 className="profile-photo"
               />
             </div>
             <div className="management-info">
-              <h2>{person.name}</h2>
-              <p>{person.role}</p>
+              <h2>{staff.name}</h2>
             </div>
           </div>
         ))}

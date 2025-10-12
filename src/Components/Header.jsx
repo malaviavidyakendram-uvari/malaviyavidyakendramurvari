@@ -24,6 +24,7 @@ const Header = () => {
   const NAV = [
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },
+    { name: "Staffs", path: "/Staffs" },
     { name: "Management", path: "/management" },
     { name: "History", path: "/history" },
     { name: "Contact", path: "/contact" },

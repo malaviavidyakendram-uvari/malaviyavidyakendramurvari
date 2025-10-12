@@ -1,6 +1,6 @@
 // src/config/firebase.js
 import { initializeApp } from "firebase/app";
-import { initializeFirestore } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -11,14 +11,10 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
-// ✅ Initialize Firebase App
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// ✅ Initialize Firestore with new cache settings
-const db = initializeFirestore(app, {
-  cache: {
-    type: "persistent", // keeps offline data stored locally
-  },
-});
+// Initialize Firestore
+const db = getFirestore(app);
 
 export { db };
