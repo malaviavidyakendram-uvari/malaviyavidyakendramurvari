@@ -11,8 +11,8 @@ app.use(express.json());
 
 // ✅ Initialize Razorpay
 const razorpay = new Razorpay({
-  key_id: process.env.rzp_live_RT0BCcKX7Qz5kR,       
-  key_secret: process.env.s1jmtQ7AiHjncQDTzqS2LLF4 
+  key_id: process.env.rzp_test_RNopDT3cPfzVfh,       // Add in .env file
+  key_secret: process.env.BPQtvMCqUuflZ0hIbnlr45LG // Add in .env file
 });
 
 // ✅ API to create order
