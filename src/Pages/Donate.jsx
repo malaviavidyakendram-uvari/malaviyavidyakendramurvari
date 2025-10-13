@@ -56,6 +56,12 @@ const Donate = () => {
         ...prev,
         pan: panValue,
       }));
+    } else if (name === "phone") {
+      const digitsOnly = value.replace(/\D/g, "").slice(0, 10);
+      setFormData((prev) => ({
+        ...prev,
+        phone: digitsOnly,
+      }));
     } else {
       setFormData((prev) => ({
         ...prev,

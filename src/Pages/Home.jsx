@@ -18,7 +18,7 @@ const Home = () => {
 
   // ✅ Slideshow images
   const slideshowImages = [
-    "/assets/schoolback.jpg",
+    "/assets/schoolback1.jpg",
     "/assets/schoolback2.jpg",
     "/assets/Schoolback3.jpg",
   ];
