@@ -1,0 +1,341 @@
+/* ================= Base ================= */
+.header {
+  width: 100%;
+  font-family: system-ui, Arial, sans-serif;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.header-container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+}
+
+/* ================= Row 1: Top Bar ================= */
+.header-top {
+  background: linear-gradient(90deg, #0b3a63, #0a2540, #0b3a63);
+  color: #e9eef6;
+  font-size: 14px;
+}
+
+.header-top .header-container {
+  width: 100%;
+  max-width: 100%; /* make it stretch full width */
+  padding: 0 30px; /* restore spacing inside the blue bar */
+  height: 44px; /* original height restored */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+
+.top-left {
+  flex: 1; /* Pushes right side to the end */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.top-right {
+  flex-shrink: 0; /* Prevents right side from shrinking */
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-left: auto; /* Ensures it stays fully to the right */
+}
+
+
+/* Icon styling */
+.top-left .icon,
+.top-right .icon {
+  display: inline-flex;
+  align-items: center;
+  font-size: 18px;
+  color: #ffcc00; 
+}
+
+/* Text links */
+.top-text,
+.phone a {
+  color: #e9eef6;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.phone {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.socials {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  color: #0a2540;
+  background: #ffcc00;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.social-link:hover { 
+  transform: translateY(-1px); 
+  filter: brightness(1.05); 
+}
+
+/* ================= Row 2: Main Bar ================= */
+.header-main {
+  background: #ffffff;
+}
+
+.header-container-2 {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+  padding: 0 16px;
+}
+
+/* Brand (logo + name) */
+.brand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  min-width: 0; 
+}
+
+.brand-icon img {
+  height: 70px;
+  width: auto;
+  display: block;
+}
+
+.brand-name {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1b1f2a;
+  margin: 0;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+/* Desktop navigation */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-list {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 50px;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 18px;
+  text-decoration: none;
+  color: #22324d;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 13px;
+  border-radius: 10px;
+  transition: background 0.25s ease, color 0.25s ease, transform 0.1s ease;
+}
+
+.nav-link:hover {
+  background: #f2f6fb;
+  color: #0b3a63;
+  transform: translateY(-1px);
+}
+
+/* CTA Button */
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 44px;
+  padding: 0 18px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 800;
+  background: #ffcc00;
+  color: #1b1f2a;
+  text-transform: uppercase;
+  transition: transform .15s ease, filter .2s ease;
+  white-space: nowrap;  
+}
+
+.cta-btn:hover { 
+  transform: translateY(-1px); 
+  filter: brightness(1.05); 
+}
+
+.cta-icon { font-size: 18px; }
+
+/* ================= Mobile Dropdown ================= */
+.mobile-menu {
+  max-height: 0;
+  overflow: hidden;
+  background: linear-gradient(180deg, #0b3a63, #0a2540);
+  transition: max-height 0.45s ease;
+}
+
+.mobile-menu.open { max-height: 900px; }
+
+.mobile-menu ul {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 6px 0 12px;
+  list-style: none;
+}
+
+.mobile-menu li {
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+
+.mobile-menu li:last-child { border-bottom: none; }
+
+.mobile-link {
+  display: block;
+  padding: 18px 20px;
+  color: #e9eef6;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: .3px;
+  transition: background 0.2s ease, transform .1s ease;
+}
+
+.mobile-link:hover { 
+  background: rgba(255,255,255,0.06); 
+  transform: translateX(2px); 
+}
+
+/* Mobile CTA */
+.mobile-cta-wrap { padding: 14px 20px; }
+.mobile-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: #ffd166;
+  color: #1b1f2a;
+  text-decoration: none;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .3px;
+}
+
+/* ================= Responsive Rules ================= */
+
+/* --------- Mobile & Tablet (<=1024px) --------- */
+@media (max-width: 1024px) {
+
+  /* 1. Hide inline location from the top-left */
+  .header-top .top-left {
+    display: none;
+  }
+
+  /* 2. Keep phone + socials visible in top row */
+  .header-top .top-right {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  /* 3. Show location as a full-width block BELOW the top row */
+  .mobile-location {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    background: linear-gradient(90deg, #0b3a63, #0a2540, #0b3a63);
+    color: #e9eef6;
+    font-size: 13px;
+    padding: 6px 20px;
+    box-sizing: border-box;
+    line-height: 1.4;
+  }
+
+  /* 4. Adjust main header bar (row 2) for mobile */
+  .header-container-2 {
+    height: 64px;
+    padding: 0 12px;
+  }
+
+  /* 5. Shrink logo and brand name */
+  .brand-icon img {
+    height: 60px;
+  }
+  .brand-name {
+    font-size: 16px;
+    white-space: normal; /* allow wrapping if needed */
+  }
+
+  /* 6. Hide desktop nav and show hamburger button */
+  .header-nav {
+    display: none !important;
+  }
+  .mobile-menu-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    color: #0b3a63;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    margin-left: auto;
+  }
+}
+
+/* --------- Desktop only (>=1025px) --------- */
+@media (min-width: 1025px) {
+  /* Normal desktop nav visible */
+  .header-nav {
+    display: flex;
+  }
+
+  /* Hide hamburger on desktop */
+  .mobile-menu-btn {
+    display: none;
+  }
+
+  /* Brand name larger on desktop */
+  .brand-name {
+    font-size: 22px;
+  }
+
+  /* Hide mobile-only location block */
+  .mobile-location {
+    display: none;
+  }
+}
