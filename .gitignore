@@ -11,15 +11,18 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-# Environment files
+# Environment / Secret files
 .env
 *.env
 .env.local
 .env.*.local
+backend/.env
+backend/.env.local
 
 # Dependency directories
 node_modules/
 **/node_modules/
+backend/node_modules/
 
 # Build output
 dist/
@@ -27,6 +30,7 @@ dist-ssr/
 build/
 **/dist/
 **/build/
+backend/dist/
 
 # Cache
 .cache/
@@ -35,25 +39,6 @@ build/
 out/
 temp/
 .tmp/
-
-# =====================================
-# 🌟 FRONTEND (React / Vite)
-# =====================================
-frontend/node_modules/
-frontend/dist/
-frontend/.env
-frontend/.env.local
-frontend/.vite/
-frontend/.cache/
-frontend/coverage/
-
-# =====================================
-# 🌟 BACKEND (Node / Express)
-# =====================================
-backend/node_modules/
-backend/dist/
-backend/.env
-backend/.env.local
 backend/.cache/
 backend/logs/
 backend/coverage/
@@ -71,5 +56,3 @@ Thumbs.db
 *.njsproj
 *.sln
 *.sw?
-
-
