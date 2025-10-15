@@ -1,12 +1,14 @@
+// src/service.js
 import axios from "axios";
 
-// ✅ Railway backend public URL
-const API_URL = "https://malaviya-vidya-kendram-production.up.railway.app";
+// ✅ Backend URL (Railway public domain)
+// Optional: use environment variable for flexibility (local dev or future changes)
+const API_URL = process.env.REACT_APP_BACKEND_URL || "https://malaviya-vidya-kendram-production.up.railway.app";
 
 /**
- * Create Razorpay order
+ * Create Razorpay order via backend
  * @param {number} amount - Amount in rupees
- * @returns {object} - Order data from backend
+ * @returns {object} - Order data returned from backend
  */
 export const createOrder = async (amount) => {
   try {
