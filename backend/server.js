@@ -1,3 +1,4 @@
+// server.js
 import express from "express";
 import Razorpay from "razorpay";
 import cors from "cors";
@@ -7,30 +8,37 @@ dotenv.config();
 
 const app = express();
 
-// -------------------- CORS Setup --------------------
-// Allow requests from both local dev and Netlify production
+// -------------------- Safety Checks --------------------
+if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
+  console.error(
+    "❌ Razorpay keys are missing! Please set RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET in Railway env."
+  );
+  process.exit(1); // stop server
+}
+
+// -------------------- Middleware --------------------
+// Allow requests from local dev and Netlify frontend
 app.use(
   cors({
     origin: [
       "http://localhost:5173", // local dev
-      "https://malaviyavidyakendram.netlify.app", // Netlify frontend
+      "https://malaviyavidyakendram.netlify.app", // production
     ],
     methods: ["GET", "POST"],
   })
 );
 
-// -------------------- Middleware --------------------
 app.use(express.json());
 
 // -------------------- Razorpay Setup --------------------
 const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID, // public key
-  key_secret: process.env.RAZORPAY_KEY_SECRET, // secret key
+  key_id: process.env.RAZORPAY_KEY_ID,
+  key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
 // -------------------- Routes --------------------
 
-// Root route for health check
+// Health check
 app.get("/", (req, res) => {
   res.send({ message: "✅ Backend is connected successfully 🚀" });
 });
@@ -40,29 +48,27 @@ app.post("/create-order", async (req, res) => {
   try {
     const { amount } = req.body;
 
-    // Validate amount
     if (!amount || isNaN(amount)) {
       return res.status(400).json({ error: "Invalid or missing amount" });
     }
 
     const options = {
-      amount: amount * 100, // Convert rupees to paise
+      amount: amount * 100, // paise
       currency: "INR",
       receipt: `receipt_${Date.now()}`,
     };
 
-    // Create order via Razorpay
     const order = await razorpay.orders.create(options);
     console.log("✅ Order created:", order);
 
     res.json(order);
   } catch (err) {
     console.error("❌ Error creating order:", err);
-    res.status(500).json({ error: "Error creating order", details: err });
+    res.status(500).json({ error: "Error creating order", details: err.message });
   }
 });
 
-// Catch-all route for undefined endpoints
+// Catch-all route
 app.all("*", (req, res) => {
   res.status(404).json({ message: "Route not found" });
 });
