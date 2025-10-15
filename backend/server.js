@@ -10,7 +10,7 @@ const app = express();
 // ✅ Allow frontend requests
 app.use(cors({
   origin: "http://localhost:5173",
-  methods: ["GET", "POST"],
+  methods: ["GET", "POST"], 
 }));
 app.use(express.json());
 
