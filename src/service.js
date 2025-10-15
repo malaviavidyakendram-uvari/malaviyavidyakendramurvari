@@ -2,8 +2,10 @@
 import axios from "axios";
 
 // ✅ Backend URL (Railway public domain)
-// Optional: use environment variable for flexibility (local dev or future changes)
-const API_URL = process.env.REACT_APP_BACKEND_URL || "https://malaviya-vidya-kendram-production.up.railway.app";
+// Use Vite environment variable (starts with VITE_)
+const API_URL =
+  import.meta.env.VITE_REACT_APP_BACKEND_URL ||
+  "https://malaviya-vidya-kendram-production.up.railway.app";
 
 /**
  * Create Razorpay order via backend
