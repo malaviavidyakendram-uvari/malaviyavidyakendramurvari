@@ -7,11 +7,15 @@ dotenv.config();
 
 const app = express();
 
-// ✅ Allow frontend requests
+// ✅ Allow frontend requests from localhost (dev) and Netlify (production)
 app.use(cors({
-  origin: "http://localhost:5173",
-  methods: ["GET", "POST"], 
+  origin: [
+    "http://localhost:5173", // local dev
+    "https://malaviyavidyakendram.netlify.app" // Netlify frontend
+  ],
+  methods: ["GET", "POST"]
 }));
+
 app.use(express.json());
 
 // ✅ Razorpay setup
@@ -50,8 +54,13 @@ app.post("/create-order", async (req, res) => {
   }
 });
 
+// ✅ Catch-all route
+app.all("*", (req, res) => {
+  res.status(404).json({ message: "Route not found" });
+});
+
 // ✅ Start server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () =>
-  console.log(`✅ Server running on http://localhost:${PORT}`)
-);
+app.listen(PORT, () => {
+  console.log(`✅ Server running on port ${PORT}`);
+});
