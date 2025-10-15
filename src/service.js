@@ -4,7 +4,7 @@ import axios from "axios";
 // ✅ Backend URL (Railway public domain)
 // Use Vite environment variable (starts with VITE_)
 const API_URL =
-  import.meta.env.VITE_REACT_APP_BACKEND_URL ||
+  import.meta.env.REACT_APP_BACKEND_URL ||
   "https://malaviya-vidya-kendram-production.up.railway.app";
 
 /**
