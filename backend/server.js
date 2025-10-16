@@ -17,13 +17,21 @@ if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
 }
 
 // -------------------- Middleware --------------------
-// Allow requests from local dev and Netlify frontend
+// Allow requests from local dev and Netlify frontend safely
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173", // local dev
-      "https://malaviyavidyakendram.netlify.app", // production
-    ],
+    origin: function (origin, callback) {
+      const allowedOrigins = [
+        "http://localhost:5173", // local dev
+        "https://malaviyavidyakendram.netlify.app", // production
+      ];
+      // allow requests with no origin (like Postman or curl)
+      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     methods: ["GET", "POST"],
   })
 );
@@ -64,7 +72,9 @@ app.post("/create-order", async (req, res) => {
     res.json(order);
   } catch (err) {
     console.error("❌ Error creating order:", err);
-    res.status(500).json({ error: "Error creating order", details: err.message });
+    res
+      .status(500)
+      .json({ error: "Error creating order", details: err.message });
   }
 });
 
