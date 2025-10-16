@@ -17,16 +17,15 @@ if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
 }
 
 // -------------------- Middleware --------------------
-// Allow requests from local dev and Netlify frontend safely
+const allowedOrigins = [
+  "http://localhost:5173", // local dev
+  "https://malaviyavidyakendram.netlify.app", // production frontend
+];
+
 app.use(
   cors({
     origin: function (origin, callback) {
-      const allowedOrigins = [
-        "http://localhost:5173", // local dev
-        "https://malaviyavidyakendram.netlify.app", // production
-      ];
-      // allow requests with no origin (like Postman or curl)
-      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
         callback(new Error("Not allowed by CORS"));
@@ -48,7 +47,7 @@ const razorpay = new Razorpay({
 
 // Health check
 app.get("/", (req, res) => {
-  res.send({ message: "✅ Backend is connected successfully 🚀" });
+  res.json({ message: "✅ Backend is connected successfully 🚀" });
 });
 
 // Create Razorpay order
@@ -61,7 +60,7 @@ app.post("/create-order", async (req, res) => {
     }
 
     const options = {
-      amount: amount * 100, // paise
+      amount: amount * 100, // convert to paise
       currency: "INR",
       receipt: `receipt_${Date.now()}`,
     };
@@ -78,7 +77,7 @@ app.post("/create-order", async (req, res) => {
   }
 });
 
-// Catch-all route
+// Catch-all 404
 app.all("*", (req, res) => {
   res.status(404).json({ message: "Route not found" });
 });
