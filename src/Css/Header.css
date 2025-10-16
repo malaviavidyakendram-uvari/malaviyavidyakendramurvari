@@ -134,13 +134,6 @@
   white-space: nowrap;
 }
 
-/* Desktop navigation */
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
 .header-nav {
   display: flex;
   align-items: center;
@@ -254,9 +247,6 @@
   letter-spacing: .3px;
 }
 
-/* ================= Responsive Rules ================= */
-
-/* --------- Mobile & Tablet (<=1024px) --------- */
 @media (max-width: 1024px) {
 
   /* 1. Hide inline location from the top-left */
@@ -269,9 +259,23 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
+    padding: 0;   /* ✅ Remove internal spacing */
+    margin: 0;    /* ✅ No outer gap */
   }
 
-  /* 3. Show location as a full-width block BELOW the top row */
+  /* ✅ Phone number — stick to absolute left edge */
+  .header-top .phone {
+    margin: 0;
+    padding: 0;
+  }
+
+  /* ✅ Social icons — stick to absolute right edge */
+  .header-top .socials {
+    margin: 0;
+    padding: 0;
+  }
+
+  /* (Other existing mobile styles stay as they are) */
   .mobile-location {
     display: flex;
     align-items: center;
@@ -285,25 +289,23 @@
     line-height: 1.4;
   }
 
-  /* 4. Adjust main header bar (row 2) for mobile */
   .header-container-2 {
     height: 64px;
     padding: 0 12px;
   }
 
-  /* 5. Shrink logo and brand name */
   .brand-icon img {
     height: 60px;
   }
   .brand-name {
     font-size: 16px;
-    white-space: normal; /* allow wrapping if needed */
+    white-space: normal;
   }
 
-  /* 6. Hide desktop nav and show hamburger button */
   .header-nav {
     display: none !important;
   }
+
   .mobile-menu-btn {
     display: inline-flex;
     align-items: center;

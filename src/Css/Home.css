@@ -7,13 +7,12 @@
   overflow-x: hidden;
 }
 
-
 /* ========================================
    HERO SECTION (Desktop + Mobile Optimized)
 ======================================== */
 .hero-section {
   width: 100%;
-  height: 100vh;                         /* Full screen height */
+  height: 100vh;
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -69,6 +68,7 @@
   margin-top: 10px;
 }
 
+/* Scroll Down Indicator */
 .scroll-down {
   position: absolute;
   bottom: 20px;
@@ -106,13 +106,13 @@
   to { opacity: 1; }
 }
 
-/* Show only on mobile (<=767px) */
+/* Hide scroll-down on desktop */
 @media (min-width: 768px) {
   .scroll-down { display: none; }
 }
 
 /* ========================================
-   Hero Text
+   Hero Text Animation
 ======================================== */
 .hero-text h1,
 .hero-text h3 {
@@ -144,7 +144,7 @@
 
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* ========================================
@@ -267,7 +267,9 @@
   margin-bottom: 25px;
 }
 
-/* Status Messages */
+/* ========================================
+   Status Messages
+======================================== */
 .status-message {
   margin-bottom: 20px;
   padding: 12px 16px;
@@ -293,7 +295,7 @@
 ======================================== */
 .form-grid {
   display: grid;
-  grid-template-columns: 1fr; /* mobile single column */
+  grid-template-columns: 1fr;
   gap: 15px;
 }
 
@@ -320,7 +322,10 @@
   box-shadow: 0 0 0 2px #1e293b;
 }
 
-.form-textarea { min-height: 120px; resize: vertical; }
+.form-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
 
 .form-button-wrapper {
   grid-column: span 1;
@@ -329,21 +334,39 @@
   padding-top: 10px;
 }
 
+@media (min-width: 768px) {
+  .form-button-wrapper { grid-column: span 2; }
+}
+
+/* ========================================
+   Submit Button
+======================================== */
+.submit-button {
+  background: #1e293b;
+  color: white;
+  font-weight: 600;
+  padding: 12px 60px;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
 /* ========================================
    FIX: Mobile Portrait Background Fit
 ======================================== */
 @media (max-width: 768px) {
   .hero-section {
-    height: 92vh; /* slightly smaller to show arrow */
-    background-size: cover; /* ensure full coverage */
+    height: 92vh;
+    background-size: contain;
     background-position: center center;
     background-repeat: no-repeat;
     background-attachment: scroll;
-    background-color: transparent !important; /* remove black/gray fill */
-    animation: none; /* remove zoom for smooth fit */
+    background-color: #000;
+    animation: none;
   }
 
-  /* Ensure all hero images look portrait and fit properly */
   .hero-section::before {
     content: "";
     position: absolute;
@@ -352,12 +375,12 @@
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
-    transform: scale(1.05); /* slight zoom for premium look */
+    transform: scale(1.05);
     z-index: 0;
   }
 
   .overlay {
-    background: rgba(0, 0, 0, 0.35); /* keep light overlay for text readability */
+    background: rgba(0, 0, 0, 0.35);
     z-index: 1;
   }
 
@@ -373,22 +396,4 @@
     left: 50%;
     transform: translateX(-50%);
   }
-}
-
-
-
-@media (min-width: 768px) {
-  .form-button-wrapper { grid-column: span 2; }
-}
-
-.submit-button {
-  background: #1e293b;
-  color: white;
-  font-weight: 600;
-  padding: 12px 60px;
-  border-radius: 6px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  border: none;
-  cursor: pointer;
-  transition: background 0.3s,
 }
