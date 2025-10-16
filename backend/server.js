@@ -71,9 +71,10 @@ app.post("/create-order", async (req, res) => {
     res.json(order);
   } catch (err) {
     console.error("❌ Error creating order:", err);
-    res
-      .status(500)
-      .json({ error: "Error creating order", details: err.message });
+    res.status(500).json({
+      error: "Error creating order",
+      details: err.message,
+    });
   }
 });
 
@@ -83,7 +84,9 @@ app.all("*", (req, res) => {
 });
 
 // -------------------- Start Server --------------------
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+const PORT = process.env.PORT || 8080;
+
+// ✅ The critical fix: bind to "0.0.0.0" so Railway can access it
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`✅ Server running on port ${PORT}`);
 });
