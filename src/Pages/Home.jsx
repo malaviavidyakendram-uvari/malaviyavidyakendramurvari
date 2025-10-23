@@ -3,10 +3,10 @@ import emailjs from "@emailjs/browser";
 import "../Css/Home.css";
 import { useNavigate } from "react-router-dom";
 
-const Home = () => {
+const Home = () => {       
   const navigate = useNavigate();
   const [sending, setSending] = useState(false);
-  const [status, setStatus] = useState({ type: "", msg: "" });
+  const [status, setStatus] = useState({ type: "", msg: "" }); 
   const [formData, setFormData] = useState({
     fullName: "",
     phone: "",
