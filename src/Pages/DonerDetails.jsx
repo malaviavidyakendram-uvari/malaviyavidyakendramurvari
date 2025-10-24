@@ -11,6 +11,7 @@ const DonorDetails = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // ✅ Fetch all donor details ordered by date (latest first)
     const q = query(collection(db, "Doner-details"), orderBy("date", "desc"));
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const donorData = snapshot.docs
@@ -24,7 +25,7 @@ const DonorDetails = () => {
     return () => unsubscribe();
   }, []);
 
-  // Format date
+  // ✅ Format date to Indian time (24h format)
   const formatDate = (timestamp) => {
     if (!timestamp?.toDate) return "-";
     return timestamp.toDate().toLocaleString("en-IN", {
@@ -39,7 +40,7 @@ const DonorDetails = () => {
     });
   };
 
-  // Pagination logic
+  // ✅ Pagination logic
   const indexOfLast = currentPage * donorsPerPage;
   const indexOfFirst = indexOfLast - donorsPerPage;
   const currentDonors = donors.slice(indexOfFirst, indexOfLast);
@@ -60,6 +61,7 @@ const DonorDetails = () => {
                 <th>Name</th>
                 <th>Amount (₹)</th>
                 <th>Status</th>
+                <th>RRN Number</th>
                 <th>Date</th>
               </tr>
             </thead>
@@ -71,6 +73,8 @@ const DonorDetails = () => {
                   <td>
                     <span className="status success">{donor.status}</span>
                   </td>
+                  {/* ✅ RRN number column */}
+                  <td>{donor.rrn_number || "N/A"}</td>
                   <td>{formatDate(donor.date)}</td>
                 </tr>
               ))}
@@ -79,7 +83,7 @@ const DonorDetails = () => {
         </div>
       )}
 
-      {/* Pagination */}
+      {/* ✅ Pagination */}
       {totalPages > 1 && (
         <div className="pagination">
           <button
@@ -110,10 +114,8 @@ const DonorDetails = () => {
         </div>
       )}
 
-      <button
-        className="history-btn"
-        onClick={() => navigate("/donorfailure")}
-      >
+      {/* ✅ Failed / Pending Page Navigation */}
+      <button className="history-btn" onClick={() => navigate("/donorfailure")}>
         🚫 View Failed Transactions
       </button>
     </div>

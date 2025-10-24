@@ -3,6 +3,7 @@ import express from "express";
 import Razorpay from "razorpay";
 import cors from "cors";
 import dotenv from "dotenv";
+import fetch from "node-fetch"; // may be needed on some setups
 
 dotenv.config();
 
@@ -13,13 +14,13 @@ if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
   console.error(
     "❌ Razorpay keys are missing! Please set RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET in Railway env."
   );
-  process.exit(1); // stop server
+  process.exit(1);
 }
 
 // -------------------- Middleware --------------------
 const allowedOrigins = [
-  "http://localhost:5173", // local dev
-  "https://malaviyavidyakendram.netlify.app", // production frontend
+  "http://localhost:5173",
+  "https://malaviyavidyakendram.netlify.app",
 ];
 
 app.use(
@@ -50,7 +51,7 @@ app.get("/", (req, res) => {
   res.json({ message: "✅ Backend is connected successfully 🚀" });
 });
 
-// Create Razorpay order
+// ✅ Create Razorpay order
 app.post("/create-order", async (req, res) => {
   try {
     const { amount } = req.body;
@@ -60,7 +61,7 @@ app.post("/create-order", async (req, res) => {
     }
 
     const options = {
-      amount: amount * 100, // convert to paise
+      amount: amount * 100,
       currency: "INR",
       receipt: `receipt_${Date.now()}`,
     };
@@ -78,15 +79,50 @@ app.post("/create-order", async (req, res) => {
   }
 });
 
-// Catch-all 404
+// ✅ Fetch RRN (Bank Reference Number) using paymentId
+app.post("/fetch-rrn", async (req, res) => {
+  try {
+    const { paymentId } = req.body;
+
+    if (!paymentId) {
+      return res.status(400).json({ error: "Missing paymentId" });
+    }
+
+    // Fetch payment details from Razorpay
+    const payment = await razorpay.payments.fetch(paymentId);
+
+    // Extract RRN if available
+    const rrn =
+      payment.acquirer_data?.rrn ||
+      payment.acquirer_data?.upi_transaction_id ||
+      payment.vpa ||
+      "Not Available";
+
+    console.log("✅ RRN Fetched for payment:", paymentId, rrn);
+
+    res.json({
+      paymentId: payment.id,
+      rrnNumber: rrn,
+      method: payment.method,
+      amount: payment.amount / 100,
+      status: payment.status,
+    });
+  } catch (err) {
+    console.error("❌ Error fetching RRN:", err);
+    res.status(500).json({
+      error: "Error fetching RRN",
+      details: err.message,
+    });
+  }
+});
+
+// -------------------- 404 Catch --------------------
 app.all("*", (req, res) => {
   res.status(404).json({ message: "Route not found" });
 });
 
 // -------------------- Start Server --------------------
 const PORT = process.env.PORT || 8080;
-
-// ✅ The critical fix: bind to "0.0.0.0" so Railway can access it
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`✅ Server running on port ${PORT}`);
 });
