@@ -10,8 +10,8 @@ const DonorDetails = () => {
   const donorsPerPage = 10;
   const navigate = useNavigate();
 
+  // ✅ Fetch donor data (only successful donations)
   useEffect(() => {
-    // ✅ Fetch all donor details ordered by date (latest first)
     const q = query(collection(db, "Doner-details"), orderBy("date", "desc"));
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const donorData = snapshot.docs
@@ -21,11 +21,13 @@ const DonorDetails = () => {
         }))
         .filter((donor) => donor.status?.toLowerCase() === "success");
       setDonors(donorData);
+      setCurrentPage(1); // ✅ reset to first page when list updates
     });
+
     return () => unsubscribe();
   }, []);
 
-  // ✅ Format date to Indian time (24h format)
+  // ✅ Format timestamp → readable Indian date/time
   const formatDate = (timestamp) => {
     if (!timestamp?.toDate) return "-";
     return timestamp.toDate().toLocaleString("en-IN", {
@@ -40,6 +42,13 @@ const DonorDetails = () => {
     });
   };
 
+  // ✅ Format amount with commas
+  const formatAmount = (amount) => {
+    if (!amount) return "0";
+    const num = Number(amount);
+    return num.toLocaleString("en-IN");
+  };
+
   // ✅ Pagination logic
   const indexOfLast = currentPage * donorsPerPage;
   const indexOfFirst = indexOfLast - donorsPerPage;
@@ -51,6 +60,7 @@ const DonorDetails = () => {
   return (
     <div className="donor-container">
       <h2 className="donor-title">Successful Donor Transactions</h2>
+
       {donors.length === 0 ? (
         <p className="no-data">No successful donations yet.</p>
       ) : (
@@ -61,6 +71,7 @@ const DonorDetails = () => {
                 <th>Name</th>
                 <th>Amount (₹)</th>
                 <th>Status</th>
+                <th>Order ID</th>
                 <th>RRN Number</th>
                 <th>Date</th>
               </tr>
@@ -68,13 +79,30 @@ const DonorDetails = () => {
             <tbody>
               {currentDonors.map((donor, index) => (
                 <tr key={donor.id} className={index % 2 === 0 ? "even" : "odd"}>
-                  <td>{donor.name}</td>
-                  <td>{donor.amount}</td>
+                  <td>{donor.name || "—"}</td>
+                  <td>₹ {formatAmount(donor.amount)}</td>
                   <td>
-                    <span className="status success">{donor.status}</span>
+                    <span className={`status ${donor.status}`}>
+                      {donor.status}
+                    </span>
                   </td>
-                  {/* ✅ RRN number column */}
-                  <td>{donor.rrn_number || "N/A"}</td>
+
+                  {/* ✅ Always show correct Order ID */}
+                  <td>
+                    {donor.orderId ||
+                      donor.order_id ||
+                      (donor.rrn && donor.rrn.startsWith("order_")
+                        ? donor.rrn
+                        : "N/A")}
+                  </td>
+
+                  {/* ✅ Always show correct RRN Number */}
+                  <td>
+                    {donor.rrn && !donor.rrn.startsWith("order_")
+                      ? donor.rrn
+                      : donor.rrn_number || "N/A"}
+                  </td>
+
                   <td>{formatDate(donor.date)}</td>
                 </tr>
               ))}
@@ -114,7 +142,7 @@ const DonorDetails = () => {
         </div>
       )}
 
-      {/* ✅ Failed / Pending Page Navigation */}
+      {/* ✅ View Failed Transactions */}
       <button className="history-btn" onClick={() => navigate("/donorfailure")}>
         🚫 View Failed Transactions
       </button>

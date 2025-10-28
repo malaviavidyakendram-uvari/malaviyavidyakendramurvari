@@ -3,7 +3,7 @@ import "../Css/Donate.css";
 import { db } from "../Pages/firebase";
 import { collection, addDoc, doc, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
-import { createOrder } from "../service"; // ✅ backend order function
+import { createOrder, fetchRRN } from "../service"; 
 
 const Donate = () => {
   const [formData, setFormData] = useState({
@@ -140,13 +140,14 @@ const Donate = () => {
       // ✅ Create order from backend
       const order = await createOrder(cleanAmount);
 
-      // ✅ Save initial donor entry with order info (RRN)
+      // ✅ Save initial donor entry with order info (temporary status)
+      // IMPORTANT: store orderId under a dedicated field, not rrn
       const docRef = await addDoc(collection(db, "Doner-details"), {
         ...formData,
         amount: cleanAmount,
         date: new Date(),
         status: "initiated",
-        rrn: order.id, // ✅ Razorpay order ID (RRN)
+        orderId: order.id, // store Razorpay order id here
       });
 
       console.log("✅ Donor entry created:", docRef.id);
@@ -160,25 +161,48 @@ const Donate = () => {
         description: "Donation Payment",
         order_id: order.id,
         handler: async function (response) {
-          // ✅ Payment success → update donor entry
-          await setDoc(
-            doc(db, "Doner-details", docRef.id),
-            {
-              ...formData,
-              amount: cleanAmount,
-              date: new Date(),
-              status: "success",
-              rrn: order.id, // ✅ ensure RRN stored
-              paymentId: response.razorpay_payment_id,
-            },
-            { merge: true }
-          );
+          try {
+            // ✅ Step 1: Fetch real RRN from backend using paymentId
+            const rrnData = await fetchRRN(response.razorpay_payment_id);
+            const rrnNumber = rrnData.rrnNumber || "Not Available";
 
-          alert("🎉 Payment Successful! ID: " + response.razorpay_payment_id);
+            // ✅ Step 2: Update donor entry with real RRN and success status
+            await setDoc(
+              doc(db, "Doner-details", docRef.id),
+              {
+                ...formData,
+                amount: cleanAmount,
+                date: new Date(),
+                status: "success",
+                rrnNumber: rrnNumber, // real bank/UPI reference
+                paymentId: response.razorpay_payment_id,
+                orderId: order.id, // ensure orderId remains present
+              },
+              { merge: true }
+            );
+
+            alert("🎉 Payment Successful! RRN: " + rrnNumber);
+          } catch (err) {
+            console.error("❌ Error fetching RRN:", err);
+            // Even if RRN fetch fails, update paymentId and status to success
+            await setDoc(
+              doc(db, "Doner-details", docRef.id),
+              {
+                ...formData,
+                amount: cleanAmount,
+                date: new Date(),
+                status: "success",
+                paymentId: response.razorpay_payment_id,
+                orderId: order.id,
+              },
+              { merge: true }
+            );
+            alert("Payment successful but failed to fetch RRN.");
+          }
         },
         modal: {
           ondismiss: async function () {
-            // ✅ Payment failed / cancelled → mark failure
+            // ✅ Payment failed / cancelled → mark failure but keep orderId
             await setDoc(
               doc(db, "Doner-details", docRef.id),
               {
@@ -186,7 +210,7 @@ const Donate = () => {
                 amount: cleanAmount,
                 date: new Date(),
                 status: "failure",
-                rrn: order.id, // ✅ still store RRN for reference
+                orderId: order.id, // keep for reference
               },
               { merge: true }
             );

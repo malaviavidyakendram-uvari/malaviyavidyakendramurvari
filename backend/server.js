@@ -3,7 +3,6 @@ import express from "express";
 import Razorpay from "razorpay";
 import cors from "cors";
 import dotenv from "dotenv";
-import fetch from "node-fetch"; // may be needed on some setups
 
 dotenv.config();
 
@@ -29,10 +28,12 @@ app.use(
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
+        console.warn("🚫 Blocked by CORS:", origin);
         callback(new Error("Not allowed by CORS"));
       }
     },
     methods: ["GET", "POST"],
+    credentials: true,
   })
 );
 
@@ -46,7 +47,7 @@ const razorpay = new Razorpay({
 
 // -------------------- Routes --------------------
 
-// Health check
+// ✅ Health check
 app.get("/", (req, res) => {
   res.json({ message: "✅ Backend is connected successfully 🚀" });
 });
@@ -61,14 +62,13 @@ app.post("/create-order", async (req, res) => {
     }
 
     const options = {
-      amount: amount * 100,
+      amount: Math.round(amount * 100), // convert ₹ to paise
       currency: "INR",
       receipt: `receipt_${Date.now()}`,
     };
 
     const order = await razorpay.orders.create(options);
-    console.log("✅ Order created:", order);
-
+    console.log("✅ Order created:", order.id, "Amount:", amount);
     res.json(order);
   } catch (err) {
     console.error("❌ Error creating order:", err);
@@ -91,15 +91,24 @@ app.post("/fetch-rrn", async (req, res) => {
     // Fetch payment details from Razorpay
     const payment = await razorpay.payments.fetch(paymentId);
 
-    // Extract RRN if available
+    // Extract possible RRN identifiers
     const rrn =
       payment.acquirer_data?.rrn ||
       payment.acquirer_data?.upi_transaction_id ||
+      payment.acquirer_data?.bank_transaction_id ||
       payment.vpa ||
       "Not Available";
 
-    console.log("✅ RRN Fetched for payment:", paymentId, rrn);
+    console.log(
+      "✅ RRN fetched:",
+      rrn,
+      "| Method:",
+      payment.method,
+      "| Payment ID:",
+      payment.id
+    );
 
+    // Send clean JSON response
     res.json({
       paymentId: payment.id,
       rrnNumber: rrn,

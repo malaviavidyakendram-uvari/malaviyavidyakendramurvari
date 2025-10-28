@@ -1,7 +1,7 @@
 // src/service.js
 import axios from "axios";
 
-// ✅ Use correct Vite environment variable format
+// ✅ Correct Vite environment variable format
 const API_URL =
   import.meta.env.VITE_BACKEND_URL ||
   "https://malaviya-vidya-kendram-production.up.railway.app";
@@ -13,8 +13,12 @@ const API_URL =
  */
 export const createOrder = async (amount) => {
   try {
+    if (!amount || isNaN(amount)) {
+      throw new Error("Invalid donation amount");
+    }
+
     const response = await axios.post(`${API_URL}/create-order`, { amount });
-    return response.data;
+    return response.data; // { id, amount, currency, ... }
   } catch (error) {
     console.error("❌ Error creating order:", error.response?.data || error);
     throw error;
@@ -22,8 +26,25 @@ export const createOrder = async (amount) => {
 };
 
 /**
- * ✅ Optional: Health check to test backend connection
- * (useful to verify Railway backend connectivity)
+ * ✅ Fetch RRN (Bank Reference Number) using Razorpay paymentId
+ * @param {string} paymentId - Razorpay payment ID
+ * @returns {object} - { paymentId, rrnNumber, method, amount, status }
+ */
+export const fetchRRN = async (paymentId) => {
+  try {
+    if (!paymentId) throw new Error("Missing paymentId");
+
+    const response = await axios.post(`${API_URL}/fetch-rrn`, { paymentId });
+    return response.data;
+  } catch (error) {
+    console.error("❌ Error fetching RRN:", error.response?.data || error);
+    throw error;
+  }
+};
+
+/**
+ * ✅ Optional: Check backend connectivity (Railway / Hostinger etc.)
+ * Use this in frontend console to test backend link quickly
  */
 export const checkBackendConnection = async () => {
   try {
