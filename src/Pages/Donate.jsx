@@ -139,7 +139,7 @@ const Donate = () => {
     try {
       // ✅ Create order from backend
       const order = await createOrder(cleanAmount);
-
+      console.log("✅ Order created via backend:", order);
       // ✅ Save initial donor entry with order info (temporary status)
       // IMPORTANT: store orderId under a dedicated field, not rrn
       const docRef = await addDoc(collection(db, "Doner-details"), {

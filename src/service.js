@@ -1,10 +1,10 @@
 // src/service.js
 import axios from "axios";
 
-// ✅ Correct Vite environment variable format
+// ✅ Use your new Render backend URL
 const API_URL =
   import.meta.env.VITE_BACKEND_URL ||
-  "https://malaviya-vidya-kendram-production.up.railway.app";
+  "https://malaviyavidyakendramurvari.onrender.com"; // ← your live Render backend
 
 /**
  * ✅ Create Razorpay order via backend
@@ -43,8 +43,7 @@ export const fetchRRN = async (paymentId) => {
 };
 
 /**
- * ✅ Optional: Check backend connectivity (Railway / Hostinger etc.)
- * Use this in frontend console to test backend link quickly
+ * ✅ Optional: Check backend connectivity
  */
 export const checkBackendConnection = async () => {
   try {

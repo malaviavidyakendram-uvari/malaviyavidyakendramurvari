@@ -1,4 +1,3 @@
-// server.js
 import express from "express";
 import Razorpay from "razorpay";
 import cors from "cors";
@@ -11,15 +10,15 @@ const app = express();
 // -------------------- Safety Checks --------------------
 if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
   console.error(
-    "❌ Razorpay keys are missing! Please set RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET in Railway env."
+    "❌ Razorpay keys are missing! Please set RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET in Render environment variables."
   );
   process.exit(1);
 }
 
 // -------------------- Middleware --------------------
 const allowedOrigins = [
-  "http://localhost:5173",
-  "https://malaviyavidyakendram.netlify.app",
+  "http://localhost:5173", // Local development
+  "https://malaviyavidyakendram.netlify.app", // Your Netlify frontend
 ];
 
 app.use(
@@ -79,7 +78,7 @@ app.post("/create-order", async (req, res) => {
   }
 });
 
-// ✅ Fetch RRN (Bank Reference Number) using paymentId
+// ✅ Fetch RRN (Bank Reference Number)
 app.post("/fetch-rrn", async (req, res) => {
   try {
     const { paymentId } = req.body;
@@ -88,10 +87,8 @@ app.post("/fetch-rrn", async (req, res) => {
       return res.status(400).json({ error: "Missing paymentId" });
     }
 
-    // Fetch payment details from Razorpay
     const payment = await razorpay.payments.fetch(paymentId);
 
-    // Extract possible RRN identifiers
     const rrn =
       payment.acquirer_data?.rrn ||
       payment.acquirer_data?.upi_transaction_id ||
@@ -108,7 +105,6 @@ app.post("/fetch-rrn", async (req, res) => {
       payment.id
     );
 
-    // Send clean JSON response
     res.json({
       paymentId: payment.id,
       rrnNumber: rrn,
