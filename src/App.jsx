@@ -12,14 +12,14 @@ import Donate from './Pages/Donate';
 import DonorDetails from './Pages/DonerDetails.jsx';
 import DonorFailure from './Pages/DonorFailure.jsx'
 import ScrollToTop from "./Components/ScrollToTop";
-//import PushStaffData from './Pages/Pushfiles.js';
+import PushStaffData from './Pages/Pushfiles.js';
 
 function App() {
   return (
     <div>
       <Header />
       <ScrollToTop />
-      {/* <PushStaffData /> */}
+      { <PushStaffData /> }
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/Staffs" element={<Staffs />} />
