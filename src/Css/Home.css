@@ -1,15 +1,43 @@
-/* ======================================== 
+/* =========================================
    General Layout
-======================================== */
+========================================= */
 .home-container {
   width: 100%;
   font-family: Arial, sans-serif;
   overflow-x: hidden;
 }
 
-/* ========================================
-   HERO SECTION (Desktop + Mobile Optimized)
-======================================== */
+/* =========================================
+   Top Donate Button Above Hero
+========================================= */
+.top-donate-button-wrapper {
+  width: 100%;
+  text-align: center;
+  padding: 15px 0;
+  background: #111827;
+  border-bottom: 3px solid #facc15;
+  position: relative;
+  z-index: 10;
+}
+
+.top-donate-button {
+  background: none;
+  border: none;
+  color: #facc15;
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.top-donate-button:hover {
+  color: #ffffff;
+}
+
+/* =========================================
+   Hero Section
+========================================= */
 .hero-section {
   width: 100%;
   height: 100vh;
@@ -17,21 +45,11 @@
   background-position: center center;
   background-size: cover;
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
   transition: background-image 1.5s ease-in-out, background-size 1.5s ease-in-out;
   animation: zoomInOut 10s ease-in-out infinite alternate;
 }
 
-/* Zoom effect for slideshow */
-@keyframes zoomInOut {
-  from { background-size: 100%; }
-  to { background-size: 110%; }
-}
-
-/* Dark overlay for readability */
+/* Overlay for readability */
 .overlay {
   position: absolute;
   inset: 0;
@@ -39,132 +57,15 @@
   z-index: 1;
 }
 
-/* Hero Text */
-.hero-text {
-  position: relative;
-  z-index: 2;
-  text-align: center;
-  max-width: 900px;
-  padding: 0 20px;
-  color: #fff;
+/* Zoom animation for slideshow */
+@keyframes zoomInOut {
+  from { background-size: 100%; }
+  to { background-size: 110%; }
 }
 
-.hero-text h1 {
-  font-size: clamp(1.8rem, 4vw, 3.5rem);
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  background: linear-gradient(90deg, #ffcc00, #ffb700, #f59e0b);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  margin-bottom: 10px;
-}
-
-.hero-text h3 {
-  font-size: clamp(1rem, 2.5vw, 2rem);
-  color: #fff;
-  font-weight: 600;
-  margin-top: 10px;
-}
-
-/* Scroll Down Indicator */
-.scroll-down {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
-  color: #ffcc00;
-  font-size: 14px;
-  animation: fadeIn 2s ease-in-out;
-  z-index: 2;
-}
-
-.scroll-down .arrow {
-  display: block;
-  font-size: 40px;
-  margin-bottom: 4px;
-  animation: bounce 1.5s infinite;
-}
-
-.scroll-down .text {
-  font-weight: 800;
-  letter-spacing: 0.5px;
-}
-
-/* Bounce Animation */
-@keyframes bounce {
-  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-  40% { transform: translateY(6px); }
-  60% { transform: translateY(3px); }
-}
-
-/* Fade In */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-/* Hide scroll-down on desktop */
-@media (min-width: 768px) {
-  .scroll-down { display: none; }
-}
-
-/* ========================================
-   Hero Text Animation
-======================================== */
-.hero-text h1,
-.hero-text h3 {
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  font-family: "Texturina", serif;
-  overflow: hidden;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 1.5s ease-out forwards;
-}
-
-.hero-text h1 {
-  font-size: clamp(1.8rem, 4vw, 3.5rem);
-  background: linear-gradient(90deg, #ffcc00, #ffb700, #f59e0b);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation-delay: 0.3s;
-}
-
-.hero-text h3 {
-  font-size: clamp(1rem, 2.5vw, 2rem);
-  color: #fff;
-  margin-top: 10px;
-  animation-delay: 0.8s;
-}
-
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* ========================================
-   Hero Quote
-======================================== */
-.hero-quote {
-  font-size: clamp(0.9rem, 2vw, 1.4rem);
-  margin-top: 15px;
-  font-weight: 500;
-  color: #fff;
-  text-shadow: 0px 3px 8px rgba(0, 0, 0, 0.7);
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 2.5s ease-out forwards;
-  animation-delay: 1.3s;
-}
-
-/* ========================================
-   About + Donate Section
-======================================== */
+/* =========================================
+   About Section
+========================================= */
 .about-section {
   padding: 60px 20px;
   background: linear-gradient(135deg, #f9f9f9, #fefce8);
@@ -202,47 +103,9 @@
   color: #111827;
 }
 
-.donate-section-title {
-  margin-top: 40px;
-  font-size: clamp(1.4rem, 2.5vw, 1.8rem);
-  font-weight: 700;
-  color: #1e293b;
-  text-align: center;
-}
-
-.donate-description {
-  text-align: center;
-  font-size: clamp(0.9rem, 1vw, 1rem);
-  margin: 12px auto 25px auto;
-  max-width: 700px;
-  color: #4b5563;
-}
-
-.donate-button-wrapper {
-  text-align: center;
-}
-
-.donate-button {
-  background: #1e293b;
-  color: #fff;
-  padding: 12px 32px;
-  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
-  font-weight: 600;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-.donate-button:hover {
-  background: #111827;
-  transform: scale(1.05);
-}
-
-/* ========================================
-   Registration Section
-======================================== */
+/* =========================================
+   Tutor Registration Section
+========================================= */
 .registration-section {
   width: 100%;
   display: flex;
@@ -267,9 +130,9 @@
   margin-bottom: 25px;
 }
 
-/* ========================================
+/* =========================================
    Status Messages
-======================================== */
+========================================= */
 .status-message {
   margin-bottom: 20px;
   padding: 12px 16px;
@@ -290,9 +153,9 @@
   font-size: 18px;
 }
 
-/* ========================================
+/* =========================================
    Form Grid
-======================================== */
+========================================= */
 .form-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -338,9 +201,9 @@
   .form-button-wrapper { grid-column: span 2; }
 }
 
-/* ========================================
+/* =========================================
    Submit Button
-======================================== */
+========================================= */
 .submit-button {
   background: #1e293b;
   color: white;
@@ -353,47 +216,85 @@
   transition: background 0.3s;
 }
 
-/* ========================================
-   FIX: Mobile Portrait Background Fit
-======================================== */
+.submit-button:hover {
+  background: #111827;
+}
+
+/* =========================================
+   Mobile Portrait Hero Slideshow Fix
+========================================= */
 @media (max-width: 768px) {
-  .hero-section {
-    height: 92vh;
-    background-size: contain;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-attachment: scroll;
-    background-color: #000;
-    animation: none;
+  .top-donate-button-wrapper {
+    padding: 12px 0;
   }
 
-  .hero-section::before {
-    content: "";
+  .top-donate-button {
+    font-size: 0.95rem;
+  }
+
+  .hero-section {
+    width: 100%;
+    height: 80vh; /* consistent height for all slides */
+    background-size: cover; /* fill container fully */
+    background-position: center center; /* center the image */
+    background-repeat: no-repeat; /* no repeating */
+    animation: none; /* remove zoom animation on mobile */
+    transition: background-image 1s ease-in-out; /* smooth fade between slides */
+  }
+
+  /* Optional: subtle gradient overlay for uniform look */
+  .overlay {
     position: absolute;
     inset: 0;
-    background: inherit;
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    transform: scale(1.05);
-    z-index: 0;
-  }
-
-  .overlay {
-    background: rgba(0, 0, 0, 0.35);
+    background: linear-gradient(
+      rgba(0, 0, 0, 0.35),
+      rgba(0, 0, 0, 0.25)
+    );
     z-index: 1;
   }
+}
 
-  .hero-text {
-    position: relative;
-    z-index: 2;
-  }
+/* =========================================
+   Mobile Hero Scroll Down Indicator
+========================================= */
+@media (max-width: 768px) {
 
   .scroll-down {
-    bottom: 100px;
-    z-index: 3;
+    display: flex; /* make it visible on mobile */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     position: absolute;
+    bottom: 15px; /* bottom center */
     left: 50%;
     transform: translateX(-50%);
+    color: #ffcc00;
+    font-size: 14px;
+    z-index: 2;
+    animation: fadeIn 2s ease-in-out;
+  }
+
+  .scroll-down .arrow {
+    font-size: 30px; /* smaller arrow on mobile */
+    animation: bounce 1.5s infinite;
+    margin-bottom: 4px;
+  }
+
+  .scroll-down .text {
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(6px); }
+    60% { transform: translateY(3px); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 }
+
+

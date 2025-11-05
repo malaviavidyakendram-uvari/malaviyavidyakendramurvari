@@ -3,10 +3,10 @@ import emailjs from "@emailjs/browser";
 import "../Css/Home.css";
 import { useNavigate } from "react-router-dom";
 
-const Home = () => {       
+const Home = () => {
   const navigate = useNavigate();
   const [sending, setSending] = useState(false);
-  const [status, setStatus] = useState({ type: "", msg: "" }); 
+  const [status, setStatus] = useState({ type: "", msg: "" });
   const [formData, setFormData] = useState({
     fullName: "",
     phone: "",
@@ -16,7 +16,7 @@ const Home = () => {
     comments: "",
   });
 
-  // ✅ Slideshow images
+  // Slideshow images
   const slideshowImages = [
     "/assets/schoolback1.1.jpg",
     "/assets/schoolback2.jpg",
@@ -25,7 +25,7 @@ const Home = () => {
 
   const [currentImage, setCurrentImage] = useState(0);
 
-  // ✅ Automatically change the image every 5 seconds
+  // Automatically change the image every 5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImage((prev) => (prev + 1) % slideshowImages.length);
@@ -36,7 +36,7 @@ const Home = () => {
   const handleChange = (e) =>
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 
-  // ✅ Validation before submit
+  // Validation before submit
   const validateForm = () => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const phonePattern = /^[0-9]{10}$/;
@@ -119,25 +119,39 @@ const Home = () => {
 
   return (
     <div className="home-container">
+      {/* Donate Button Above Hero */}
+      <div className="top-donate-button-wrapper">
+        <button
+          onClick={() => navigate("/donate")}
+          className="top-donate-button"
+        >
+          🎓 Donate to Educate
+        </button>
+      </div>
+
       {/* Hero Section */}
       <div
         className="hero-section"
         style={{
-         backgroundImage: `url(${slideshowImages[currentImage]})`,
+          backgroundImage: `url(${slideshowImages[currentImage]})`,
         }}
       >
         <div className="overlay"></div>
-        <div className="hero-text">
-          <h1>Welcome to Our School</h1>
-          <h3>"Your future begins here."</h3>
-        </div>
+        <div
+          className="hero-section"
+          style={{ backgroundImage: `url(${slideshowImages[currentImage]})` }}
+        >
+          <div className="overlay"></div>
 
-        <div className="scroll-down">
-          <span className="arrow">↓</span>
-          <span className="text">Scroll Down</span>
+          {/* Scroll Down Indicator (Mobile Only) */}
+          <div className="scroll-down">
+            <span className="arrow">↓</span>
+            <span className="text">Scroll Down</span>
+          </div>
         </div>
       </div>
 
+      {/* About Section */}
       <section className="about-section">
         <div className="about-box">
           <h2>WHO WE ARE</h2>
@@ -172,26 +186,10 @@ const Home = () => {
             to our village kids to bring them in par with any urban kid – Trying
             to bridge the gap.
           </p>
-
-          <h2 className="donate-section-title">Donate to Educate</h2>
-          <p className="donate-description">
-            We would like to support the <b>Malaviya Vidyalaya Kendram </b>
-            as a small effort to express our gratitude for everything we’ve been
-            blessed with!
-          </p>
-
-          <div className="donate-button-wrapper">
-            <button
-              onClick={() => navigate("/donate")}
-              className="donate-button"
-            >
-              Donate Now
-            </button>
-          </div>
         </div>
       </section>
 
-      {/* Tutor Registration */}
+      {/* Tutor Registration Section */}
       <section className="registration-section">
         <div className="registration-box">
           <h2 className="form-title">Tutor Registration</h2>
@@ -207,7 +205,6 @@ const Home = () => {
           )}
 
           <form onSubmit={handleSubmit} className="form-grid">
-            {/* Name - only letters */}
             <input
               name="fullName"
               value={formData.fullName}
@@ -219,8 +216,6 @@ const Home = () => {
               pattern="[A-Za-z\s]+"
               title="Name should only contain letters and spaces"
             />
-
-            {/* Email - must be valid */}
             <input
               name="email"
               value={formData.email}
@@ -230,8 +225,6 @@ const Home = () => {
               type="email"
               className="form-input"
             />
-
-            {/* Phone - only 10 digits */}
             <input
               name="phone"
               value={formData.phone}
@@ -249,8 +242,6 @@ const Home = () => {
               pattern="[0-9]{10}"
               title="Phone number must be exactly 10 digits"
             />
-
-            {/* Country */}
             <input
               name="country"
               value={formData.country}
@@ -267,8 +258,6 @@ const Home = () => {
               <option value="Australia" />
               <option value="Canada" />
             </datalist>
-
-            {/* Interest */}
             <input
               name="interest"
               value={formData.interest}
@@ -278,8 +267,6 @@ const Home = () => {
               type="text"
               className="form-input form-span"
             />
-
-            {/* Comments */}
             <textarea
               name="comments"
               value={formData.comments}
@@ -287,9 +274,12 @@ const Home = () => {
               placeholder="Additional Comments (Optional)"
               className="form-textarea form-span"
             />
-
             <div className="form-button-wrapper">
-              <button type="submit" disabled={sending} className="submit-button">
+              <button
+                type="submit"
+                disabled={sending}
+                className="submit-button"
+              >
                 {sending ? "Sending..." : "Submit"}
               </button>
             </div>

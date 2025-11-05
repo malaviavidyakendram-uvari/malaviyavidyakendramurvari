@@ -21,7 +21,7 @@ const DonorDetails = () => {
         }))
         .filter((donor) => donor.status?.toLowerCase() === "success");
       setDonors(donorData);
-      setCurrentPage(1); // ✅ reset to first page when list updates
+      setCurrentPage(1);
     });
 
     return () => unsubscribe();
@@ -72,6 +72,7 @@ const DonorDetails = () => {
                 <th>Amount (₹)</th>
                 <th>Status</th>
                 <th>Order ID</th>
+                <th>Payment ID</th>
                 <th>RRN Number</th>
                 <th>Date</th>
               </tr>
@@ -87,21 +88,10 @@ const DonorDetails = () => {
                     </span>
                   </td>
 
-                  {/* ✅ Always show correct Order ID */}
-                  <td>
-                    {donor.orderId ||
-                      donor.order_id ||
-                      (donor.rrn && donor.rrn.startsWith("order_")
-                        ? donor.rrn
-                        : "N/A")}
-                  </td>
-
-                  {/* ✅ Always show correct RRN Number */}
-                  <td>
-                    {donor.rrn && !donor.rrn.startsWith("order_")
-                      ? donor.rrn
-                      : donor.rrn_number || "N/A"}
-                  </td>
+                  {/* ✅ Separate columns */}
+                  <td>{donor.orderId || donor.order_id || "N/A"}</td>
+                  <td>{donor.paymentId || donor.payment_id || "N/A"}</td>
+                  <td>{donor.rrnNumber || donor.rrn_number || donor.rrn || "N/A"}</td>
 
                   <td>{formatDate(donor.date)}</td>
                 </tr>
