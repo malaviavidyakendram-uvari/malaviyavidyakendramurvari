@@ -10,7 +10,7 @@ const app = express();
 // -------------------- Safety Checks --------------------
 if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
   console.error(
-    "❌ Razorpay keys are missing! Please set RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET in Render environment variables."
+    "❌ Razorpay keys are missing! Please set RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET in environment variables."
   );
   process.exit(1);
 }
@@ -18,7 +18,9 @@ if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
 // -------------------- Middleware --------------------
 const allowedOrigins = [
   "http://localhost:5173", // Local development
-  "https://malaviyavidyakendram.netlify.app", // Your Netlify frontend
+  "https://malaviyavidyakendram.netlify.app", // Old Netlify domain
+  "https://uvarimkv.org", //  New primary domain
+  "https://www.uvarimkv.org", //  www version (optional but recommended)
 ];
 
 app.use(
