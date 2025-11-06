@@ -10,7 +10,7 @@
   display: flex;
   justify-content: center;
   gap: 20px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   flex-wrap: wrap;
 }
 
@@ -20,8 +20,8 @@
   padding: 25px;
   border-radius: 12px;
   text-align: center;
-  flex: 1 1 280px; /* flexible width */
-  min-width: 220px; /* never too small */
+  flex: 1 1 280px;
+  min-width: 220px;
   max-width: 350px;
   min-height: 150px;
   display: flex;
@@ -36,22 +36,19 @@
 .tag-icon {
   font-size: 28px;
   margin-bottom: 10px;
-  color: #ffd700; /* Gold highlight */
+  color: #ffd700;
 }
 
 .tag-card h4 {
   margin: 5px 0;
   font-size: 18px;
   color: #ffd700;
-  text-align: center;
 }
 
 .tag-card p {
   margin: 0;
   font-size: 15px;
   line-height: 1.4;
-  text-align: center;
-  word-break: break-word;
 }
 
 /* Map + Form row */
@@ -68,14 +65,14 @@
 
 .form-container {
   flex: 1;
-  background: #ffd700; /* Yellow theme */
+  background: #ffd700;
   padding: 25px;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
 .form-container h3 {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   text-align: center;
   font-size: 22px;
   color: #000;
@@ -125,30 +122,35 @@
 
 /* ========================
    Responsive Styles
-   ======================== */
+======================== */
 
 /* Tablets (<=1024px) */
 @media (max-width: 1024px) {
   .contact-tags {
-    gap: 15px;
+    gap: 10px; /* ✅ Reduced gap between tag cards */
   }
+
   .tag-card {
-    flex: 1 1 45%; /* two cards per row */
+    flex: 1 1 45%;
     min-height: 130px;
-    padding: 20px;
+    padding: 18px;
   }
+
   .tag-card h4 {
     font-size: 16px;
   }
+
   .tag-card p {
     font-size: 14px;
   }
+
   .contact-main {
     flex-direction: column;
+    gap: 10px; /* ✅ Reduced gap between map and form */
   }
+
   .map-container,
   .form-container {
-    flex: none;
     width: 100%;
     min-height: 300px;
   }
@@ -157,34 +159,61 @@
 /* Mobiles (<=600px) */
 @media (max-width: 600px) {
   .contact-section {
-    padding: 20px 10px;
+    padding: 10px 20px;
   }
+
+  .contact-tags {
+    gap: 10px; /* ✅ Maintain same small gap for mobile */
+  }
+
   .tag-card {
     width: 100%;
     max-width: 100%;
-    padding: 18px;
+    padding: 16px;
   }
+
   .tag-card h4 {
     font-size: 15px;
   }
+
   .tag-card p {
     font-size: 13px;
   }
+
+  .contact-main {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* ✅ Change the order in mobile view */
   .form-container {
+    order: 1; /* Form appears before map */
     padding: 15px;
   }
+
+  .map-container {
+    order: 2; /* Map appears last */
+    min-height: 100px;
+  }
+
   .form-container h3 {
     font-size: 18px;
   }
+
   .input-group {
     padding: 8px;
   }
+
   .input-group input,
   .input-group textarea {
     font-size: 14px;
   }
+
   .submit-btn {
     padding: 10px;
     font-size: 14px;
   }
 }
+
+
