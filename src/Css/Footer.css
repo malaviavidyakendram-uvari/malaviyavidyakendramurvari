@@ -1,136 +1,155 @@
-.footer {
-  background-color: #0b2c56; /* Dark blue */
-  color: white;
-  font-family: "Segoe UI", sans-serif;
-  margin-top: 50px;
+/* =============================
+   MVK Footer Styling
+============================= */
+
+.mvk-footer {
+  background: #111827;
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+  padding-top: 40px;
 }
 
-/* Top section */
-.footer-top {
+.mvk-footer-top {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   flex-wrap: wrap;
-  padding: 60px 80px;
   gap: 40px;
+  padding: 0 20px 30px;
 }
 
-.footer-section {
+.mvk-footer-section {
   flex: 1;
   min-width: 260px;
+  max-width: 400px;
 }
 
-.footer-section h3 {
-  font-size: 24px;
-  margin-bottom: 20px;
-  color: #ffc107;
-  font-weight: bold;
+.mvk-footer-section h3 {
+  color: #ffd700;
+  font-size: 20px;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.footer-section p {
-  margin: 8px 0;
-  font-size: 17px;
-  line-height: 1.8;
+.mvk-footer-section p,
+.mvk-footer-section a,
+.mvk-footer-section li {
+  color: #d1d5db;
+  font-size: 15px;
+  line-height: 1.6;
 }
 
-.footer-section ul {
+.mvk-footer-section a {
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.mvk-footer-section a:hover {
+  color: #ffd700;
+}
+
+/* Social icons */
+.mvk-footer-social {
+  margin-top: 12px;
+  display: flex;
+  gap: 12px;
+}
+
+.mvk-footer-social a {
+  background: #ffd700;
+  color: #111827;
+  font-size: 18px;
+  padding: 8px;
+  border-radius: 50%;
+  display: inline-flex;
+  transition: 0.3s;
+}
+
+.mvk-footer-social a:hover {
+  background: #fff;
+  color: #000;
+}
+
+/* Quick Links list */
+.mvk-footer-links ul {
   list-style: none;
   padding: 0;
 }
 
-.footer-section ul li {
-  margin-bottom: 14px;
+.mvk-footer-links li {
+  margin-bottom: 8px;
 }
 
-.footer-section ul li a {
-  text-decoration: none;
-  font-size: 17px;
-  color: white;
-  transition: color 0.3s ease, padding-left 0.3s ease;
+.mvk-footer-links a {
+  color: #d1d5db;
 }
 
-.footer-section ul li a:hover {
-  color: #ffc107;
-  padding-left: 6px;
+.mvk-footer-links a:hover {
+  color: #ffd700;
 }
 
-/* Social Media Icons */
-.footer-social {
-  margin-top: 20px;
-  display: flex;
-  gap: 15px;
-}
-
-.footer-social a {
-  color: white;
-  font-size: 22px;
-  width: 40px;
-  height: 40px;
-  background: #061a33;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-}
-
-.footer-social a:hover {
-  background: #ffc107;
-  color: #0b2c56;
-  transform: translateY(-3px);
-}
-
-/* Bottom bar */
-.footer-bottom {
+/* Footer bottom bar */
+.mvk-footer-bottom {
+  background: #0d1321;
   text-align: center;
-  padding: 20px;
-  background-color: #061a33;
-  font-size: 16px;
-  letter-spacing: 0.5px;
+  padding: 15px 10px;
+  border-top: 2px solid #ffd700;
 }
 
-/* ===================== */
-/* RESPONSIVE DESIGN     */
-/* ===================== */
+.mvk-footer-bottom p {
+  margin: 0;
+  font-size: 14px;
+  color: #d1d5db;
+}
 
-/* Tablet */
+/* =============================
+   Responsive Styling
+============================= */
+
+/* Tablet (<=1024px) */
 @media (max-width: 1024px) {
-  .footer-top {
-    padding: 40px 50px;
-  }
-
-  .footer-section h3 {
-    font-size: 22px;
-  }
-
-  .footer-section p,
-  .footer-section ul li a {
-    font-size: 16px;
+  .mvk-footer-top {
+    gap: 30px;
   }
 }
 
-/* Mobile */
-@media (max-width: 768px) {
-  .footer-top {
+/* Mobile (<=600px) */
+@media (max-width: 600px) {
+  .mvk-footer {
+    padding-top: 25px;
+  }
+
+  .mvk-footer-top {
     flex-direction: column;
-    align-items: start;
-    text-align: start;
-    padding: 40px 20px;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
   }
 
-  .footer-section {
-    margin-bottom: 30px;
+  .mvk-footer-contact {
+    order: 1;
   }
 
-  .footer-social {
-    justify-content: start;
+  .mvk-footer-links {
+    order: 2;
+    text-align: center;
   }
 
-  .footer-section ul li a {
-    font-size: 18px; 
+  .mvk-footer-links ul {
+    padding: 0;
+    margin: 0 auto;
+    display: inline-block;
   }
 
-  .footer-bottom {
-    font-size: 15px;
-    padding: 15px;
+  .mvk-footer-links li {
+    margin-bottom: 6px;
+  }
+
+  .mvk-footer-social {
+    justify-content: center;
+  }
+
+  .mvk-footer-bottom p {
+    font-size: 13px;
   }
 }
