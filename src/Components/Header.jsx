@@ -88,6 +88,7 @@ const Header = () => {
           </div>
         </div>
       </div>
+
       {/* ROW 2 — MAIN BAR */}
       <div className="header-main">
         <div className="header-container-2">
@@ -128,6 +129,15 @@ const Header = () => {
 
       {/* Mobile dropdown */}
       <div ref={menuRef} className={`mobile-menu ${menuOpen ? "open" : ""}`}>
+        {/* ✅ Added Close (X) Button */}
+        <button
+          className="mobile-close-btn"
+          onClick={() => setMenuOpen(false)}
+          aria-label="Close menu"
+        >
+          ✕
+        </button>
+
         <ul>
           {NAV.map((item) => (
             <li key={item.name}>

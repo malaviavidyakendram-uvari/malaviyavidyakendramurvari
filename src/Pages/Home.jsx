@@ -125,7 +125,7 @@ const Home = () => {
           onClick={() => navigate("/donate")}
           className="top-donate-button"
         >
-          🎓 Donate to Educate
+          🎓 Donate for Education
         </button>
       </div>
 
@@ -140,15 +140,7 @@ const Home = () => {
         <div
           className="hero-section"
           style={{ backgroundImage: `url(${slideshowImages[currentImage]})` }}
-        >
-          <div className="overlay"></div>
-
-          {/* Scroll Down Indicator (Mobile Only) */}
-          <div className="scroll-down">
-            <span className="arrow">↓</span>
-            <span className="text">Scroll Down</span>
-          </div>
-        </div>
+        ></div>
       </div>
 
       {/* About Section */}

@@ -1,11 +1,13 @@
-/* ================= Base ================= */
+/* ===============================
+   📌 BASE HEADER LAYOUT
+=============================== */
 .header {
   width: 100%;
   font-family: system-ui, Arial, sans-serif;
   position: sticky;
   top: 0;
   z-index: 50;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
 .header-container {
@@ -14,10 +16,12 @@
   padding: 0 10px;
   display: flex;
   align-items: center;
-  justify-content: space-between; 
+  justify-content: space-between;
 }
 
-/* ================= Row 1: Top Bar ================= */
+/* ===============================
+   💙 TOP BAR (Desktop)
+=============================== */
 .header-top {
   background: linear-gradient(90deg, #0b3a63, #0a2540, #0b3a63);
   color: #e9eef6;
@@ -26,42 +30,39 @@
 
 .header-top .header-container {
   width: 100%;
-  max-width: 100%; /* make it stretch full width */
-  padding: 0 30px; /* restore spacing inside the blue bar */
-  height: 44px; /* original height restored */
+  max-width: 100%;
+  padding: 0 30px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-
-
 .top-left {
-  flex: 1; /* Pushes right side to the end */
+  flex: 1;
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
 .top-right {
-  flex-shrink: 0; /* Prevents right side from shrinking */
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   gap: 18px;
-  margin-left: auto; /* Ensures it stays fully to the right */
+  margin-left: auto;
 }
 
-
-/* Icon styling */
+/* Icons */
 .top-left .icon,
 .top-right .icon {
   display: inline-flex;
   align-items: center;
   font-size: 18px;
-  color: #ffcc00; 
+  color: #ffcc00;
 }
 
-/* Text links */
+/* Text + Links */
 .top-text,
 .phone a {
   color: #e9eef6;
@@ -75,6 +76,7 @@
   gap: 8px;
 }
 
+/* Social Icons */
 .socials {
   display: flex;
   align-items: center;
@@ -93,30 +95,32 @@
   transition: transform 0.2s ease, filter 0.2s ease;
 }
 
-.social-link:hover { 
-  transform: translateY(-1px); 
-  filter: brightness(1.05); 
+.social-link:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
 }
 
-/* ================= Row 2: Main Bar ================= */
+/* ===============================
+   ⚙️ MAIN HEADER (Desktop)
+=============================== */
 .header-main {
   background: #ffffff;
 }
 
 .header-container-2 {
-  height: 80px;
+  height: 100px;
   display: flex;
   align-items: center;
-  justify-content: space-between; 
+  justify-content: space-between;
   padding: 0 16px;
 }
 
-/* Brand (logo + name) */
+/* Logo + Name */
 .brand {
   display: flex;
   align-items: center;
   text-decoration: none;
-  min-width: 0; 
+  min-width: 0;
 }
 
 .brand-icon img {
@@ -134,6 +138,7 @@
   white-space: nowrap;
 }
 
+/* Navigation Links */
 .header-nav {
   display: flex;
   align-items: center;
@@ -167,7 +172,7 @@
   transform: translateY(-1px);
 }
 
-/* CTA Button */
+/* CTA (Donate, etc.) */
 .cta-btn {
   display: inline-flex;
   align-items: center;
@@ -180,102 +185,69 @@
   background: #ffcc00;
   color: #1b1f2a;
   text-transform: uppercase;
-  transition: transform .15s ease, filter .2s ease;
-  white-space: nowrap;  
+  transition: transform 0.15s ease, filter 0.2s ease;
+  white-space: nowrap;
 }
 
-.cta-btn:hover { 
-  transform: translateY(-1px); 
-  filter: brightness(1.05); 
+.cta-btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
 }
 
-.cta-icon { font-size: 18px; }
-
-/* ================= Mobile Dropdown ================= */
-.mobile-menu {
-  max-height: 0;
-  overflow: hidden;
-  background: linear-gradient(180deg, #0b3a63, #0a2540);
-  transition: max-height 0.45s ease;
+.cta-icon {
+  font-size: 18px;
 }
 
-.mobile-menu.open { max-height: 900px; }
+/* ===============================
+   🖥️ DESKTOP ONLY STYLES
+=============================== */
+@media (min-width: 1025px) {
+  .header-nav {
+    display: flex;
+  }
 
-.mobile-menu ul {
-  display: flex;
-  flex-direction: column;
-  margin: 0;
-  padding: 6px 0 12px;
-  list-style: none;
+  .mobile-menu-btn {
+    display: none;
+  }
+
+  .brand-name {
+    font-size: 22px;
+  }
+
+  .mobile-location {
+    display: none;
+  }
 }
 
-.mobile-menu li {
-  border-bottom: 1px solid rgba(255,255,255,0.12);
-}
-
-.mobile-menu li:last-child { border-bottom: none; }
-
-.mobile-link {
-  display: block;
-  padding: 18px 20px;
-  color: #e9eef6;
-  text-decoration: none;
-  text-transform: uppercase;
-  font-weight: 700;
-  letter-spacing: .3px;
-  transition: background 0.2s ease, transform .1s ease;
-}
-
-.mobile-link:hover { 
-  background: rgba(255,255,255,0.06); 
-  transform: translateX(2px); 
-}
-
-/* Mobile CTA */
-.mobile-cta-wrap { padding: 14px 20px; }
-.mobile-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 16px;
-  border-radius: 10px;
-  background: #ffd166;
-  color: #1b1f2a;
-  text-decoration: none;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: .3px;
-}
-
+/* ===============================
+   📱 MOBILE STYLES
+=============================== */
 @media (max-width: 1024px) {
-
-  /* 1. Hide inline location from the top-left */
+  /* Hide left info */
   .header-top .top-left {
     display: none;
   }
 
-  /* 2. Keep phone + socials visible in top row */
+  /* Adjust top bar layout */
   .header-top .top-right {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    padding: 0;   /* ✅ Remove internal spacing */
-    margin: 0;    /* ✅ No outer gap */
+    padding: 0;
+    margin: 0;
   }
 
-  /* ✅ Phone number — stick to absolute left edge */
   .header-top .phone {
     margin: 0;
     padding: 0;
   }
 
-  /* ✅ Social icons — stick to absolute right edge */
   .header-top .socials {
     margin: 0;
     padding: 0;
   }
 
-  /* (Other existing mobile styles stay as they are) */
+  /* Mobile location info bar */
   .mobile-location {
     display: flex;
     align-items: center;
@@ -297,6 +269,7 @@
   .brand-icon img {
     height: 60px;
   }
+
   .brand-name {
     font-size: 16px;
     white-space: normal;
@@ -306,6 +279,7 @@
     display: none !important;
   }
 
+  /* Hamburger Icon */
   .mobile-menu-btn {
     display: inline-flex;
     align-items: center;
@@ -316,28 +290,126 @@
     border: none;
     cursor: pointer;
     margin-left: auto;
+    z-index: 1001;
+  }
+
+  /* ===============================
+     🍔 MOBILE DROPDOWN (Slide-In from Right)
+  =============================== */
+  .mobile-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 260px;
+    height: 100vh;
+    background: linear-gradient(180deg, #0b3a63, #0a2540);
+    box-shadow: -4px 0 10px rgba(0, 0, 0, 0.3);
+    transform: translateX(100%);
+    transition: transform 0.4s ease-in-out;
+    overflow-y: auto;
+    z-index: 999;
+  }
+
+  .mobile-menu.open {
+    transform: translateX(0);
+  }
+
+  .mobile-menu ul {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 70px 0 12px;
+    list-style: none;
+  }
+
+  .mobile-menu li {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .mobile-menu li:last-child {
+    border-bottom: none;
+  }
+
+  .mobile-link {
+    display: block;
+    padding: 18px 20px;
+    color: #e9eef6;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    transition: background 0.2s ease, transform 0.1s ease;
+  }
+
+  .mobile-link:hover {
+    background: rgba(255, 255, 255, 0.06);
+    transform: translateX(2px);
+  }
+
+  /* CTA inside menu */
+  .mobile-cta-wrap {
+    padding: 14px 20px;
+  }
+
+  .mobile-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    background: #ffd166;
+    color: #1b1f2a;
+    text-decoration: none;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+
+  /* Optional dark overlay behind menu */
+  .mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 998;
+    display: none;
+  }
+
+  .mobile-menu.open + .mobile-menu-overlay {
+    display: block;
   }
 }
 
-/* --------- Desktop only (>=1025px) --------- */
+/*  MOBILE MENU CLOSE BUTTON */
+@media (max-width: 1024px) {
+  .mobile-close-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 26px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1002;
+    transition: transform 0.2s ease, color 0.2s ease;
+  }
+
+  .mobile-close-btn:hover {
+    transform: scale(1.1);
+    color: #ffd166;
+  }
+}
+
+/* FIX — Hide Mobile Menu in Desktop */
 @media (min-width: 1025px) {
-  /* Normal desktop nav visible */
-  .header-nav {
-    display: flex;
-  }
-
-  /* Hide hamburger on desktop */
-  .mobile-menu-btn {
-    display: none;
-  }
-
-  /* Brand name larger on desktop */
-  .brand-name {
-    font-size: 22px;
-  }
-
-  /* Hide mobile-only location block */
-  .mobile-location {
-    display: none;
+  .mobile-menu,
+  .mobile-menu-overlay {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
   }
 }

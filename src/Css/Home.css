@@ -1,43 +1,43 @@
-/* =========================================
-   General Layout
-========================================= */
+/* General layout */
 .home-container {
   width: 100%;
   font-family: Arial, sans-serif;
   overflow-x: hidden;
 }
 
-/* =========================================
-   Top Donate Button Above Hero
-========================================= */
+/* Donate button section (hidden on desktop) */
 .top-donate-button-wrapper {
   width: 100%;
   text-align: center;
   padding: 15px 0;
-  background: #111827;
-  border-bottom: 3px solid #facc15;
+  background: #fff;
+  border-bottom: 2px solid #86efac;
   position: relative;
   z-index: 10;
+  display: none;
 }
 
 .top-donate-button {
-  background: none;
+  background: #4ade80;
+  color: #064e3b;
   border: none;
-  color: #facc15;
-  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  padding: 10px 28px;
+  border-radius: 8px;
   font-weight: 700;
-  letter-spacing: 1px;
+  font-size: 1rem;
   cursor: pointer;
-  transition: color 0.3s ease;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(74, 222, 128, 0.3);
 }
 
 .top-donate-button:hover {
+  background: #22c55e;
   color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(34, 197, 94, 0.4);
 }
 
-/* =========================================
-   Hero Section
-========================================= */
+/* Hero section */
 .hero-section {
   width: 100%;
   height: 100vh;
@@ -49,25 +49,14 @@
   animation: zoomInOut 10s ease-in-out infinite alternate;
 }
 
-/* Overlay for readability */
-.overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-  z-index: 1;
-}
-
-/* Zoom animation for slideshow */
 @keyframes zoomInOut {
   from { background-size: 100%; }
   to { background-size: 110%; }
 }
 
-/* =========================================
-   About Section
-========================================= */
+/* About section */
 .about-section {
-  padding: 60px 20px;
+  padding: 10px 10px;
   background: linear-gradient(135deg, #f9f9f9, #fefce8);
   display: flex;
   justify-content: center;
@@ -103,9 +92,7 @@
   color: #111827;
 }
 
-/* =========================================
-   Tutor Registration Section
-========================================= */
+/* Tutor registration section */
 .registration-section {
   width: 100%;
   display: flex;
@@ -130,9 +117,7 @@
   margin-bottom: 25px;
 }
 
-/* =========================================
-   Status Messages
-========================================= */
+/* Form styles */
 .status-message {
   margin-bottom: 20px;
   padding: 12px 16px;
@@ -153,9 +138,6 @@
   font-size: 18px;
 }
 
-/* =========================================
-   Form Grid
-========================================= */
 .form-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -201,9 +183,6 @@
   .form-button-wrapper { grid-column: span 2; }
 }
 
-/* =========================================
-   Submit Button
-========================================= */
 .submit-button {
   background: #1e293b;
   color: white;
@@ -220,11 +199,10 @@
   background: #111827;
 }
 
-/* =========================================
-   Mobile Portrait Hero Slideshow Fix
-========================================= */
+/* Mobile view */
 @media (max-width: 768px) {
   .top-donate-button-wrapper {
+    display: block;
     padding: 12px 0;
   }
 
@@ -234,67 +212,11 @@
 
   .hero-section {
     width: 100%;
-    height: 80vh; /* consistent height for all slides */
-    background-size: cover; /* fill container fully */
-    background-position: center center; /* center the image */
-    background-repeat: no-repeat; /* no repeating */
-    animation: none; /* remove zoom animation on mobile */
-    transition: background-image 1s ease-in-out; /* smooth fade between slides */
-  }
-
-  /* Optional: subtle gradient overlay for uniform look */
-  .overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      rgba(0, 0, 0, 0.35),
-      rgba(0, 0, 0, 0.25)
-    );
-    z-index: 1;
+    height: 55vh;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    animation: none;
+    transition: background-image 1s ease-in-out;
   }
 }
-
-/* =========================================
-   Mobile Hero Scroll Down Indicator
-========================================= */
-@media (max-width: 768px) {
-
-  .scroll-down {
-    display: flex; /* make it visible on mobile */
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    bottom: 15px; /* bottom center */
-    left: 50%;
-    transform: translateX(-50%);
-    color: #ffcc00;
-    font-size: 14px;
-    z-index: 2;
-    animation: fadeIn 2s ease-in-out;
-  }
-
-  .scroll-down .arrow {
-    font-size: 30px; /* smaller arrow on mobile */
-    animation: bounce 1.5s infinite;
-    margin-bottom: 4px;
-  }
-
-  .scroll-down .text {
-    font-weight: 700;
-    letter-spacing: 0.5px;
-  }
-
-  @keyframes bounce {
-    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-    40% { transform: translateY(6px); }
-    60% { transform: translateY(3px); }
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-}
-
-
