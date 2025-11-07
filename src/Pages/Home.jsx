@@ -119,16 +119,6 @@ const Home = () => {
 
   return (
     <div className="home-container">
-      {/* Donate Button Above Hero */}
-      <div className="top-donate-button-wrapper">
-        <button
-          onClick={() => navigate("/donate")}
-          className="top-donate-button"
-        >
-          🎓 Donate for Education
-        </button>
-      </div>
-
       {/* Hero Section */}
       <div
         className="hero-section"
@@ -141,6 +131,16 @@ const Home = () => {
           className="hero-section"
           style={{ backgroundImage: `url(${slideshowImages[currentImage]})` }}
         ></div>
+      </div>
+
+        {/* Donate Button Above Hero */}
+      <div className="top-donate-button-wrapper">
+        <button
+          onClick={() => navigate("/donate")}
+          className="top-donate-button"
+        >
+          🎓 Donate for Education
+        </button>
       </div>
 
       {/* About Section */}

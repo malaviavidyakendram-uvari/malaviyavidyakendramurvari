@@ -17,7 +17,7 @@ const Donate = () => {
 
   const [isRazorpayLoaded, setIsRazorpayLoaded] = useState(false);
   const [isLoadingPayment, setIsLoadingPayment] = useState(false);
-  const [countdown, setCountdown] = useState(3);
+  const [countdown, setCountdown] = useState(15); // ⏳ Increased from 3 → 15
   const navigate = useNavigate();
 
   // -------------------- Load Razorpay Script --------------------
@@ -122,6 +122,7 @@ const Donate = () => {
   // -------------------- Submit / Razorpay --------------------
   const handleSubmit = async (e) => {
     e.preventDefault();
+    window.scrollTo({ top: 0, behavior: "smooth" });
     if (!validateForm()) return;
     if (!window.Razorpay) {
       alert("❌ Razorpay SDK not available. Please refresh and try again.");
@@ -131,7 +132,10 @@ const Donate = () => {
     const cleanAmount = formData.amount.replace(/,/g, "");
     try {
       setIsLoadingPayment(true);
-      setCountdown(3);
+      setCountdown(15); // ⏳ reset 15s timer
+
+      // ✅ Prevent unwanted scroll during loading
+      document.body.style.overflow = "hidden";
 
       const order = await createOrder(cleanAmount);
       console.log("✅ Order created via backend:", order);
@@ -144,7 +148,7 @@ const Donate = () => {
         orderId: order.id,
       });
 
-      // Wait 3 seconds for countdown, then open Razorpay
+      // ✅ Wait 15 seconds (not 3) before opening Razorpay
       setTimeout(() => {
         const options = {
           key: import.meta.env.VITE_RAZORPAY_KEY_ID,
@@ -186,6 +190,8 @@ const Donate = () => {
                 { merge: true }
               );
               alert("Payment successful but failed to fetch RRN.");
+            } finally {
+              document.body.style.overflow = "auto"; // ✅ Restore scroll after payment
             }
           },
           modal: {
@@ -202,6 +208,7 @@ const Donate = () => {
                 { merge: true }
               );
               console.warn("⚠️ Payment failed or cancelled.");
+              document.body.style.overflow = "auto"; // ✅ Restore scroll
             },
           },
           prefill: {
@@ -215,11 +222,12 @@ const Donate = () => {
         rzp1.open();
         setIsLoadingPayment(false);
         resetForm();
-      }, 3000);
+      }, 15000); // ⏳ increased delay from 3000 → 15000 ms
     } catch (error) {
       console.error("❌ Error processing donation:", error);
       alert("Failed to process donation. Try again.");
       setIsLoadingPayment(false);
+      document.body.style.overflow = "auto"; // ✅ Ensure scroll restored on error
     }
   };
 
@@ -329,4 +337,4 @@ const Donate = () => {
   );
 };
 
-export default Donate;
+export default Donate; 
