@@ -1,10 +1,35 @@
 import React from "react";
 import { FaGamepad, FaLandmark, FaFutbol, FaPencilAlt } from "react-icons/fa";
 import "../Css/About.css";
+import { Helmet } from "react-helmet"; // ✅ Import Helmet for SEO
 
 const About = () => {
   return (
     <div className="about-container">
+      {/* ✅ SEO META TAGS START */}
+      <Helmet>
+        <title>About Malaviya Vidya Kendram | Uvari English Medium School</title>
+        <meta
+          name="description"
+          content="Learn more about Malaviya Vidya Kendram, a leading English medium school in Uvari since 1995. Providing affordable quality education, cultural activities, and modern learning tools for village kids."
+        />
+        <meta
+          name="keywords"
+          content="About Malaviya Vidya Kendram, malaviyavidyakendram, Uvari school, English medium school, best school in Uvari, Tirunelveli education, affordable school fees, malaviyavidyakendramurvari, uvarimkv, AK JeyaPandi, TCS funded school"
+        />
+        <meta name="author" content="Malaviya Vidya Kendram School" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://malaviyavidyakendramurvari.netlify.app/about" />
+        <meta property="og:title" content="About Malaviya Vidya Kendram | School in Uvari" />
+        <meta
+          property="og:description"
+          content="Discover the journey of Malaviya Vidya Kendram, Uvari — nurturing rural education with modern facilities and dedicated teachers since 1995."
+        />
+        <meta property="og:image" content="https://malaviyavidyakendramurvari.netlify.app/assets/schoolback2.jpg" />
+        <meta property="og:url" content="https://malaviyavidyakendramurvari.netlify.app/about" />
+      </Helmet>
+      {/* ✅ SEO META TAGS END */}
+
       {/* Who We Are Section */}
       <div className="about-content">
         <div className="about-text">
@@ -38,8 +63,7 @@ const About = () => {
             <strong>Address:</strong> 9/62-3, Aalamara north street, Karaichuthu
             Uvari - 627 651, Tirunelveli dist
             <br />
-            <strong>Ph:</strong>  04637-210990
-
+            <strong>Ph:</strong> 04637-210990
             <br />
             <strong>Recog OBE:</strong> 019061
             <br />

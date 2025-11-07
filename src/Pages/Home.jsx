@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import emailjs from "@emailjs/browser";
 import "../Css/Home.css";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet"; // ✅ SEO import
 
 const Home = () => {
   const navigate = useNavigate();
@@ -16,16 +17,13 @@ const Home = () => {
     comments: "",
   });
 
-  // Slideshow images
   const slideshowImages = [
     "/assets/schoolback1.jpg",
     "/assets/schoolback2.jpg",
     "/assets/Schoolback3.jpg",
   ];
-
   const [currentImage, setCurrentImage] = useState(0);
 
-  // Automatically change the image every 5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImage((prev) => (prev + 1) % slideshowImages.length);
@@ -36,7 +34,6 @@ const Home = () => {
   const handleChange = (e) =>
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 
-  // Validation before submit
   const validateForm = () => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const phonePattern = /^[0-9]{10}$/;
@@ -46,12 +43,10 @@ const Home = () => {
       setStatus({ type: "error", msg: "Name must contain only letters." });
       return false;
     }
-
     if (!emailPattern.test(formData.email)) {
       setStatus({ type: "error", msg: "Please enter a valid email address." });
       return false;
     }
-
     if (!phonePattern.test(formData.phone)) {
       setStatus({
         type: "error",
@@ -59,17 +54,14 @@ const Home = () => {
       });
       return false;
     }
-
     if (formData.country.trim() === "") {
       setStatus({ type: "error", msg: "Please enter your country." });
       return false;
     }
-
     if (formData.interest.trim() === "") {
       setStatus({ type: "error", msg: "Please enter your interested area." });
       return false;
     }
-
     return true;
   };
 
@@ -119,6 +111,30 @@ const Home = () => {
 
   return (
     <div className="home-container">
+      {/* ✅ SEO META TAGS START */}
+      <Helmet>
+        <title>Malaviya Vidya Kendram | Best School in Uvari</title>
+        <meta
+          name="description"
+          content="Malaviya Vidya Kendram Uvari - Providing quality education since 1995. English medium school offering classes from LKG to VIII with modern facilities, video learning, and dedicated tutors."
+        />
+        <meta
+          name="keywords"
+          content="Malaviya Vidya Kendram, malaviyavidyakendram, Malaviya school Uvari, Uvari school, malaviyavidyakendramurvari, uvarimkv, malaviya school, uvari education, best school in Uvari, Tamil Nadu school, English medium school, TCS funded school"
+        />
+        <meta name="author" content="Malaviya Vidya Kendram School" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://malaviyavidyakendramurvari.netlify.app/" />
+        <meta property="og:title" content="Malaviya Vidya Kendram | School in Uvari" />
+        <meta
+          property="og:description"
+          content="Providing quality education and social service from home. Join Malaviya Vidya Kendram – Uvari’s best English medium school."
+        />
+        <meta property="og:image" content="https://malaviyavidyakendramurvari.netlify.app/assets/schoolback1.jpg" />
+        <meta property="og:url" content="https://malaviyavidyakendramurvari.netlify.app/" />
+      </Helmet>
+      {/* ✅ SEO META TAGS END */}
+
       {/* Hero Section */}
       <div
         className="hero-section"
@@ -127,13 +143,9 @@ const Home = () => {
         }}
       >
         <div className="overlay"></div>
-        <div
-          className="hero-section"
-          style={{ backgroundImage: `url(${slideshowImages[currentImage]})` }}
-        ></div>
       </div>
 
-        {/* Donate Button Above Hero */}
+      {/* Donate Button */}
       <div className="top-donate-button-wrapper">
         <button
           onClick={() => navigate("/donate")}
@@ -181,7 +193,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Tutor Registration Section */}
+      {/* Tutor Registration */}
       <section className="registration-section">
         <div className="registration-box">
           <h2 className="form-title">Tutor Registration</h2>

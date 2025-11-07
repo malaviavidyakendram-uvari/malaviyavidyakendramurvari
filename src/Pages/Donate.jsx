@@ -4,6 +4,7 @@ import { db } from "../Pages/firebase";
 import { collection, addDoc, doc, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { createOrder, fetchRRN } from "../service";
+import { Helmet } from "react-helmet-async"; // ✅ SEO Import
 
 const Donate = () => {
   const [formData, setFormData] = useState({
@@ -17,7 +18,7 @@ const Donate = () => {
 
   const [isRazorpayLoaded, setIsRazorpayLoaded] = useState(false);
   const [isLoadingPayment, setIsLoadingPayment] = useState(false);
-  const [countdown, setCountdown] = useState(15); // ⏳ Increased from 3 → 15
+  const [countdown, setCountdown] = useState(15);
   const navigate = useNavigate();
 
   // -------------------- Load Razorpay Script --------------------
@@ -28,19 +29,14 @@ const Donate = () => {
     script.onload = () => setIsRazorpayLoaded(true);
     script.onerror = () => setIsRazorpayLoaded(false);
     document.body.appendChild(script);
-
-    return () => {
-      document.body.removeChild(script);
-    };
+    return () => document.body.removeChild(script);
   }, []);
 
   // -------------------- Countdown Timer --------------------
   useEffect(() => {
     let timer;
     if (isLoadingPayment && countdown > 0) {
-      timer = setInterval(() => {
-        setCountdown((prev) => prev - 1);
-      }, 1000);
+      timer = setInterval(() => setCountdown((prev) => prev - 1), 1000);
     }
     return () => clearInterval(timer);
   }, [isLoadingPayment, countdown]);
@@ -132,9 +128,7 @@ const Donate = () => {
     const cleanAmount = formData.amount.replace(/,/g, "");
     try {
       setIsLoadingPayment(true);
-      setCountdown(60); // ⏳ reset 60s timer
-
-      // ✅ Prevent unwanted scroll during loading
+      setCountdown(60);
       document.body.style.overflow = "hidden";
 
       const order = await createOrder(cleanAmount);
@@ -148,14 +142,14 @@ const Donate = () => {
         orderId: order.id,
       });
 
-      // ✅ Wait 15 seconds (not 3) before opening Razorpay
       setTimeout(() => {
         const options = {
           key: import.meta.env.VITE_RAZORPAY_KEY_ID,
           amount: order.amount,
           currency: order.currency,
-          name: "School Donation",
-          description: "Donation Payment",
+          name: "Malaviya Vidyalaya Kendram - School Donation",
+          description:
+            "Support education for rural children in Uvari village, Tirunelveli.",
           order_id: order.id,
           handler: async function (response) {
             try {
@@ -191,7 +185,7 @@ const Donate = () => {
               );
               alert("Payment successful but failed to fetch RRN.");
             } finally {
-              document.body.style.overflow = "auto"; // ✅ Restore scroll after payment
+              document.body.style.overflow = "auto";
             }
           },
           modal: {
@@ -207,8 +201,7 @@ const Donate = () => {
                 },
                 { merge: true }
               );
-              console.warn("⚠️ Payment failed or cancelled.");
-              document.body.style.overflow = "auto"; // ✅ Restore scroll
+              document.body.style.overflow = "auto";
             },
           },
           prefill: {
@@ -222,18 +215,41 @@ const Donate = () => {
         rzp1.open();
         setIsLoadingPayment(false);
         resetForm();
-      }, 15000); // ⏳ increased delay from 3000 → 15000 ms
+      }, 15000);
     } catch (error) {
       console.error("❌ Error processing donation:", error);
       alert("Failed to process donation. Try again.");
       setIsLoadingPayment(false);
-      document.body.style.overflow = "auto"; // ✅ Ensure scroll restored on error
+      document.body.style.overflow = "auto";
     }
   };
 
   // -------------------- JSX --------------------
   return (
     <div className="donation-container">
+      {/* ✅ SEO TAGS */}
+      <Helmet>
+        <title>Donate | Malaviya Vidyalaya Kendram Uvari - Support Rural Education</title>
+        <meta
+          name="description"
+          content="Support Malaviya Vidyalaya Kendram, Uvari — a non-profit rural English medium school. Your donation helps provide education, meals, and resources to underprivileged children."
+        />
+        <meta
+          name="keywords"
+          content="Malaviya Vidyalaya Kendram, Uvari School, donate school, Tamil Nadu education, rural school, charity, Tirunelveli school, support education, India donation, help children study"
+        />
+        <meta name="author" content="Malaviya Vidyalaya Kendram School" />
+        <meta property="og:title" content="Donate to Malaviya Vidyalaya Kendram - Support Rural Education" />
+        <meta
+          property="og:description"
+          content="Make a difference. Donate to Malaviya Vidyalaya Kendram to support rural education in Uvari, Tirunelveli."
+        />
+        <meta property="og:image" content="/assets/Blue and Brown Illustrative School Logo.png" />
+        <meta property="og:url" content="https://malaviyavidyakendramurvari.netlify.app/donate" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://malaviyavidyakendramurvari.netlify.app/donate" />
+      </Helmet>
+
       {isLoadingPayment ? (
         <div className="loading-screen">
           <div className="loader"></div>
@@ -245,7 +261,7 @@ const Donate = () => {
             <div className="org-logo">
               <img
                 src="/assets/Blue and Brown Illustrative School Logo.png"
-                alt="Organization Logo"
+                alt="Malaviya Vidyalaya Kendram Logo"
               />
             </div>
             <h2 className="org-name">Malaviya Vidyalaya Kendram</h2>
@@ -337,4 +353,4 @@ const Donate = () => {
   );
 };
 
-export default Donate; 
+export default Donate;

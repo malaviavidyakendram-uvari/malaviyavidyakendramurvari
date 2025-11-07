@@ -7,7 +7,8 @@ import {
   FaPhone,
   FaMapMarkerAlt,
 } from "react-icons/fa";
-import emailjs from "@emailjs/browser"; // ✅ Import EmailJS
+import emailjs from "@emailjs/browser";
+import { Helmet } from "react-helmet"; // ✅ Added for SEO
 import "../Css/Contact.css";
 
 const Contact = () => {
@@ -24,18 +25,12 @@ const Contact = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
     let newValue = value;
 
-    if (name === "name") {
-      newValue = value.replace(/[^a-zA-Z\s]/g, ""); // only letters & spaces
-    }
-    if (name === "phone") {
-      newValue = value.replace(/[^0-9]/g, "").slice(0, 10); // only digits, max 10
-    }
-    if (name === "subject") {
-      newValue = value.replace(/[^a-zA-Z0-9\s]/g, ""); // letters, numbers & spaces
-    }
+    if (name === "name") newValue = value.replace(/[^a-zA-Z\s]/g, "");
+    if (name === "phone") newValue = value.replace(/[^0-9]/g, "").slice(0, 10);
+    if (name === "subject")
+      newValue = value.replace(/[^a-zA-Z0-9\s]/g, "");
 
     setFormData({ ...formData, [name]: newValue });
   };
@@ -43,7 +38,7 @@ const Contact = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // 🔹 Extra validation before sending
+    // 🔹 Validation
     if (!/^[a-zA-Z\s]+$/.test(formData.name)) {
       setStatus({ type: "error", msg: "Name must contain only letters." });
       return;
@@ -57,17 +52,11 @@ const Contact = () => {
       return;
     }
     if (formData.subject.trim().length < 3) {
-      setStatus({
-        type: "error",
-        msg: "Subject must be at least 3 characters.",
-      });
+      setStatus({ type: "error", msg: "Subject must be at least 3 characters." });
       return;
     }
     if (formData.message.trim().length < 10) {
-      setStatus({
-        type: "error",
-        msg: "Message must be at least 10 characters.",
-      });
+      setStatus({ type: "error", msg: "Message must be at least 10 characters." });
       return;
     }
 
@@ -103,19 +92,65 @@ const Contact = () => {
         setTimeout(() => setStatus({ type: "", msg: "" }), 3000);
       })
       .finally(() => setSending(false));
-
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      subject: "",
-      message: "",
-    });
   };
 
   return (
     <div className="contact-section">
-      {/* Top Tags */}
+      {/* 🧭 SEO Meta Tags */}
+      <Helmet>
+        <title>Contact | Malaviya Vidya Kendram School Uvari</title>
+        <meta
+          name="description"
+          content="Contact Malaviya Vidya Kendram School, Uvari. Get in touch with our staff for admissions, academic queries, and school activities."
+        />
+        <meta
+          name="keywords"
+          content="Malaviya Vidya Kendram, Uvari School, Tirunelveli school, best school in Uvari, CBSE school in Tirunelveli, contact Malaviya Vidya Kendram"
+        />
+        <meta name="author" content="Malaviya Vidya Kendram School" />
+        <meta property="og:title" content="Malaviya Vidya Kendram School - Contact Us" />
+        <meta
+          property="og:description"
+          content="Reach out to Malaviya Vidya Kendram School, Uvari for admissions and general inquiries."
+        />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:url"
+          content="https://your-website-link.com/contact"
+        />
+        <meta
+          property="og:image"
+          content="https://your-website-link.com/school-logo.png"
+        />
+
+        {/* 🏫 Schema Markup for Google */}
+        <script type="application/ld+json">
+          {`
+          {
+            "@context": "https://schema.org",
+            "@type": "School",
+            "name": "Malaviya Vidya Kendram",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "9/62-3, Aalamara north street, Karaichuthu Uvari - 627 651",
+              "addressLocality": "Uvari",
+              "addressRegion": "Tamil Nadu",
+              "postalCode": "627651",
+              "addressCountry": "IN"
+            },
+            "telephone": "04637-210990",
+            "email": "malaviavidyakendram@gmail.com",
+            "url": "https://your-website-link.com",
+            "sameAs": [
+              "https://www.facebook.com/your-school-page",
+              "https://www.instagram.com/your-school-page"
+            ]
+          }
+          `}
+        </script>
+      </Helmet>
+
+      {/* Top Info Cards */}
       <div className="contact-tags">
         <div className="tag-card">
           <FaEnvelope className="tag-icon" />
@@ -126,6 +161,7 @@ const Contact = () => {
             </a>
           </p>
         </div>
+
         <div className="tag-card">
           <FaPhone className="tag-icon" />
           <h4>Phone No</h4>
@@ -133,6 +169,7 @@ const Contact = () => {
             <a href="tel:04637210990">📞 Ph- 04637-210990</a>
           </p>
         </div>
+
         <div className="tag-card">
           <FaMapMarkerAlt className="tag-icon" />
           <h4>Address</h4>
@@ -143,7 +180,7 @@ const Contact = () => {
         </div>
       </div>
 
-      {/* Map + Form Row */}
+      {/* Map and Form */}
       <div className="contact-main">
         {/* Google Map */}
         <div className="map-container">
