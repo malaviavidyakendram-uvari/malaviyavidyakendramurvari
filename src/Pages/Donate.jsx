@@ -132,7 +132,7 @@ const Donate = () => {
     const cleanAmount = formData.amount.replace(/,/g, "");
     try {
       setIsLoadingPayment(true);
-      setCountdown(15); // ⏳ reset 15s timer
+      setCountdown(60); // ⏳ reset 60s timer
 
       // ✅ Prevent unwanted scroll during loading
       document.body.style.overflow = "hidden";
