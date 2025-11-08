@@ -1,0 +1,7 @@
+# robots.txt for Uvari MKV Official Website
+
+User-agent: *
+Allow: /
+
+# Sitemap for Google and other crawlers
+Sitemap: https://uvarimkv.org/sitemap.xml
