@@ -273,8 +273,8 @@ const Donate = () => {
             </p>
             <div className="contact-box">
               <h4>Contact Us:</h4>
-              <p>📧 malaviyavidyakendram.uvari@gmail.com</p>
-              <p>📞 Ph-04637277137</p>
+              <p>📧 malaviavidyakendram@gmail.com</p>
+              <p>📞 Ph- 04637-210990</p>
             </div>
             <div className="terms">
               <h4>Terms & Conditions:</h4>
