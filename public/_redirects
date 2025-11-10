@@ -1,1 +1,5 @@
-https://malaviyavidyakendram.netlify.app/* https://uvarimkv.org/:splat 301!
+# 🔁 Redirect all Netlify subdomain traffic to your main domain
+https://malaviyavidyakendram.netlify.app/*  https://uvarimkv.org/:splat  301!
+
+# ⚙️ React Router SPA handling – fix 404 errors for deep links
+/*    /index.html   200
